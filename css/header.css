@@ -1,0 +1,29 @@
+/* STYLES FOR HEADER AND HEADER´S SONS */
+.header{
+    /* width: 100%; */
+    background-color: rgba(0, 0, 0, 0.418);
+    background: rgb(255,255,255);
+background: linear-gradient(90deg, rgba(255,255,255,0.5308823358444941) 0%, rgba(255,255,255,0.2283613274411327) 50%, rgba(255,255,255,0) 100%),url(../assets/images/index/bg__header.jpg);
+    /* background-image: url(../assets/images/index/bg__header.jpg); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-position-y:-400px ; */
+    grid-area: header;
+    height: 250px;
+    display: none;
+    animation-name: header_moving;
+    animation-duration: 30s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    z-index: 100;
+}
+
+@keyframes header_moving {
+    from{
+        background-position: bottom;
+    }
+    to{
+        background-position: top;
+    }
+}
