@@ -1,7 +1,7 @@
 <?php
 //Conditional to cehck if a extension response exists
 if(isset($_POST['optionExtends'])){
-        $response = htmlspecialchars($_POST['sessionExtends']);
+        $response = htmlspecialchars($_POST['optionExtends']);
         //Conditinal to know response value
         if($response == 'yes'){//Conditional to extend session more time
             setcookie(getSessionCookieName(session_id(), $id),'sessionActive',time() + 1 * 30,'/');
@@ -16,4 +16,5 @@ if(isset($sessionCookie)){
     setcookie(getSessionCookieName(session_id(), $id),'sessionActive',time() + 1 * 30,'/');
 }else{//Conditional to call form for extend session
     require '../pages/sessionExtends.php';
+    exit;
 }

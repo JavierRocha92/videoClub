@@ -5,6 +5,7 @@ require '../lib/files/allowManagement.php';
 //Cookie management
 
 require '../lib/files/cookieSession.php';
+                  setcookie(getSessionCookieName('', $id),date("d-m-Y H:i"),time() + 24 * 3600,'/');
 $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
 ?>
 

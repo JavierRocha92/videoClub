@@ -8,7 +8,7 @@
  * @param string $password
  * @return \PDO
  */
-function connectionBBDD($cadena, $user = 0, $password = 0) {
+function connectionBBDD($cadena, $user = 'root', $password = '') {
     try {
         $bd = new PDO($cadena, $user, $password);
         return $bd;
@@ -74,5 +74,5 @@ function displayError($content) {
 //Functions about cookies
 
 function getSessionCookieName($session_id,$id){
-    return hash('sha256',$session_id.$id);
+    return hash('sha256',($session_id.$id));
 }
