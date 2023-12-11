@@ -18,31 +18,38 @@ function connectionBBDD($cadena, $user = 'root', $password = '') {
     }
 }
 
-function getSelectQuery($values, $table, $keyWords) {
+function getSelectQuery($values, $table, $keyWords = false) {
     $sql = 'SELECT ';
     foreach ($values as $value) {//For each to bulid fileds 
         $sql .= $value . ', ';
     }
     //calling function to remove the last two character from a string
     $sql = removeCharacter($sql, -2);
-    $sql .= " FROM $table WHERE ";
-    foreach ($keyWords as $value) {//For each to build keyWords
-        $sql .= "$value = ? and ";
+    $sql .= " FROM $table";
+    //Conditinal to check if $keywords exists
+    if ($keyWords) {
+        $sql .= " WHERE ";
+        foreach ($keyWords as $value) {//For each to build keyWords
+            $sql .= "$value = ? and ";
+        }
+        //calling function to remove the last two character from a string
+        $sql = removeCharacter($sql, -5);
     }
-    //calling function to remove the last two character from a string
-    $sql = removeCharacter($sql, -5);
     $sql .= ";";
-    echo $sql;
     return $sql;
 }
 
-function makeStatement($bd, $sql, $keyValues) {
+function makeStatement($bd, $sql, $keyValues = null) {
     try {
         $result = $bd->prepare($sql);
-        $result->execute($keyValues);
-        if($result->rowCount() > 0){
+        if (isset($keyValues)) {
+            $result->execute($keyValues);
+        } else {
+            $result->execute();
+        }
+        if ($result->rowCount() > 0) {
             return $result->fetchAll(PDO::FETCH_ASSOC);
-        }else{
+        } else {
             return false;
         }
     } catch (Exception $ex) {
@@ -70,9 +77,19 @@ function displayError($content) {
     <?php
 }
 
-
 //Functions about cookies
 
-function getSessionCookieName($session_id,$id){
-    return hash('sha256',($session_id.$id));
+function getSessionCookieName($session_id, $id) {
+    return hash('sha256', ($session_id . $id));
+}
+
+//Funtions about create elements
+
+function createButtonsFilm($id) {
+    ?>
+    <div class="card__buttons d-flex justify-content-around p-2 w-50">
+        <button class="btn bg-primary text-light" name="delete" value="<?= $id ?>">Eliminar</button>
+        <button class="btn bg-primary text-light" name="update" value="<?= $id ?>">Modificar</button>
+    </div>
+    <?php
 }

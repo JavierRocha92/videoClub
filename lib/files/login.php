@@ -1,6 +1,7 @@
 <?php
 
 require '../functions.php';
+//DEBEMOS DE CREARNOS UN OBJETO PARA LA CONECXION DE LA BASE DE DATOS CON LOS ATRIBUTOS PARA REALIZAR LA CONEXION 
 //Create a varibale to storage pdo object gerated by calling function to connect database
 $bd = connectionBBDD('mysql:dbname=videoclub;host=127.0.0.1', 'root', '');
 //Calling function to verify post massage exist and filter it

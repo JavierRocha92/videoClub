@@ -2,11 +2,14 @@
 require '../lib/functions.php';
 session_start();
 require '../lib/files/allowManagement.php';
+//Require class files
+require '../lib/model/Actor.php';
+require '../lib/model/Pelicula.php';
 //Cookie management
-
 require '../lib/files/cookieSession.php';
-                  setcookie(getSessionCookieName('', $id),date("d-m-Y H:i"),time() + 24 * 3600,'/');
 $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
+//Calling file to get code for loaf films
+require '../lib/files/loadFilms.php';
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +29,6 @@ $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessio
         <link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/nav_horizontal.css">
         <link rel="stylesheet" href="../css/footer.css">
-        <link rel="stylesheet" href="../css/languajes.css">
         <link rel="stylesheet" href="../css/responsive.css">
         <!-- FONT-AWESOME REMOTE LIBRARY -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -46,7 +48,7 @@ $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessio
                 <a href="../index.html" class=" center_column container_image">
                     <img src="../assets/images/index/software-development.png" alt="" class="nav__image nav__image--1400">
                     <!-- <img src="../assets/images/index/software-development.png" alt="" class="nav__image nav__image--menu"> -->
-                    <h1 class="nav__title">TheMagicOfCoding</h1>
+                    <h1 class="nav__title">OnlineVideoclub</h1>
                 </a>
                 <nav class="center_row nav" id="nav">
                     <ul class="nav__list">
@@ -97,108 +99,19 @@ $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessio
                 </div>
             </div>
             <main class="center_column main">
-                <!-- titl for the section -->
-                <h2 class="title"> Basic languajes for web development</h2>
-                <p class="description">
-                    Programming languages play a pivotal role in web design, acting as protagonists in site creation. HTML
-                    defines structure, CSS adds visual flair, and JavaScript brings interactivity. PHP manages dynamic
-                    content, while Python and Java enhance capabilities. Their precise amalgamation ensures the development
-                    of effective and dynamic web pages, fostering innovation and adaptation to the demands of today's
-                    digital landscape.</p>
-                <!-- sectin for all card languajes -->
-                <section class="center_row cards">
-
-                    <!-- languaje card hmtl -->
-                    <a href="https://lenguajehtml.com/" target="_blank" class="card card--html">
-                        <main class="card__main">
-                            <div class="card__container_image">
-                                <img src="../assets/images/html__code.jpg" alt="" class="card__img">
-                            </div>
-                            <div class="card__content">
-                                <div class="card__title card__title--html">
-                                    <h3 class="title--card title--html">
-                                        <i class="fa-brands fa-html5"></i>
-                                    </h3>
-                                </div>
-                            </div>
-                        </main>
-                    </a>
-                    <!-- languaje card css -->
-                    <a href="https://lenguajecss.com/css/introduccion/que-es-css/" target="_blank" class="card card--css">
-                        <main class="card__main">
-                            <div class="card__container_image">
-                                <img src="../assets/images/css__code.avif" alt="" class="card__img">
-                            </div>
-                            <div class="card__content">
-                                <div class="card__title card__title--css">
-                                    <h3 class="title--card title--css">
-                                        <i class="fa-brands fa-css3-alt"></i>
-                                    </h3>
-                                </div>
-                            </div>
-                        </main>
-                    </a>
-                    <!-- languaje card js -->
-                    <a href="https://lenguajejs.com/javascript/" target="_blank" class="card card--js">
-                        <main class="card__main">
-                            <div class="card__container_image">
-                                <img src="../assets/images/js__code.jpg" alt="" class="card__img">
-                            </div>
-                            <div class="card__content">
-                                <div class="card__title card__title--js">
-                                    <h3 class="title--card title--js">
-                                        <i class="fa-brands fa-js"></i>
-                                    </h3>
-                                </div>
-                            </div>
-                        </main>
-                    </a>
-                    <!-- languaje card php -->
-                    <a href="https://www.php.net/manual/es/intro-whatis.php" target="_blank" class="card card--php">
-                        <main class="card__main">
-                            <div class="card__container_image">
-                                <img src="../assets/images/php__code.jpg" alt="" class="card__img">
-                            </div>
-                            <div class="card__content">
-                                <div class="card__title card__title--php">
-                                    <h3 class="title--card title--php">
-                                        <i class="fa-brands fa-php"></i>
-                                    </h3>
-                                </div>
-                            </div>
-                        </main>
-                    </a>
-                    <!-- languaje card python -->
-                    <a href="https://www.python.org/" target="_blank" class="card card--python">
-                        <main class="card__main">
-                            <div class="card__container_image">
-                                <img src="../assets/images/python__code.jpg" alt="" class="card__img">
-                            </div>
-                            <div class="card__content">
-                                <div class="card__title card__title--python">
-                                    <h3 class="title--card title--python">
-                                        <i class="fa-brands fa-python"></i>
-                                    </h3>
-                                </div>
-                            </div>
-                        </main>
-                    </a>
-                    <!-- languaje card java -->
-                    <a href="https://www.java.com/es/" target="_blank" class="card card--java">
-                        <main class="card__main">
-                            <div class="card__container_image">
-                                <img src="../assets/images/java__code.jpg" alt="" class="card__img">
-                            </div>
-                            <div class="card__content">
-                                <div class="card__title card__title--java">
-                                    <h3 class="title--card title--java">
-                                        <i class="fa-brands fa-java"></i>
-                                    </h3>
-                                </div>
-                            </div>
-                        </main>
-                    </a>
-                </section>
+               <?php
+               //Conditional to check if si set $films array to call for each
+               if(isset($films)){
+                   //For each to iterate all films
+                   foreach ($films as $peli) {
+                       $peli->showAsCard();
+                       //Conditonal to show buttons depending of user rol
+                       if($rol == 1){
+                           createButtonsFilm($peli->getId());
+                       }
+                   }
+               }
+               ?>
             </main>
             <!-- main final -->
             <!-- footer -->
