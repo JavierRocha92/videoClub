@@ -87,9 +87,9 @@ function getSessionCookieName($session_id, $id) {
 
 function createButtonsFilm($id) {
     ?>
-    <div class="card__buttons d-flex justify-content-around p-2 w-50">
+    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="card__buttons d-flex justify-content-around p-2 w-50">
         <button class="btn bg-primary text-light" name="delete" value="<?= $id ?>">Eliminar</button>
         <button class="btn bg-primary text-light" name="update" value="<?= $id ?>">Modificar</button>
-    </div>
+    </form>
     <?php
 }

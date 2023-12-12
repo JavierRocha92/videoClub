@@ -93,29 +93,74 @@ class Pelicula {
         array_push($this->actors, $actor);
     }
 
-    public function showAsCard() {
+    public function showAsCard($userRol) {
         ?>
-
-        <div class="card mb-3">
-            <div class="card__visor">
+        <!-- card container -->
+        <article class="container__card mb-3 row d-flex justify-content-center">
+            <!-- card content -->
+            <article class="card flex-row border-0">
                 <header class="card__header">
-                    <h2 class="card__title"><?= $this->titulo ?></h2>
-                    <h2 class="card__genre"><?= $this->genero ?></h2>
+                    <img src="../assets/images/films/<?= $this->cartel ?>" alt="" class="card__img">
                 </header>
-                <div class="container__image">
-                    <img class="visor__image" src="../assets/images/<?= $this->cartel ?>" alt="alt"/>
-                </div>
-            </div>
-            <footer class="card__footer">
+                <!-- card main -->
+                <main class="card__main p-3 text-light bg-dark col-7">
+                    <!-- film title -->
+                    <h2 class="card__title">
+                        <?php echo $this->titulo ?>
+                    </h2>
+                    <!-- film info (year) (duration) (genre) -->
+                    <div class="card__info d-flex justify-content-between col-10 mb-4">
+                        <!-- film year launch -->
+                        <span class="card__year">
+                            2002
+                        </span>
+                        <!-- film duration -->
+                        <span class="card__duration">
+                            111 min
+                        </span>
+                        <!-- film genre -->
+                        <span class="card__genre">
+                            <?php echo $this->genero ?>
+                        </span>
+                    </div>
+                    <!-- film raitng 'container star' -->
+                    <div class="card__rating d-flex col-10 mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <div class="card__sinopsis col-12 mb-2">
+                        <!-- film description -->
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi similique commodi placeat, at
+                        amet velit, adipisci libero repudiandae vel vitae nulla tempore veritatis nihil maiores tempora
+                        aliquid quia aperiam neque.
+                    </div>
+                    <!-- card button trailer -->
+                    <div class="card__button ms-2 mb-0 position-relative col-7 d-flex row">
+                        <a href="#" class="card__link text-decoration-none p-1 pe-2 fw-bold">
+                            Watch Trailer</a>
+                        <i class="fa-solid fs-4 fa-play card__icon position-absolute"></i>
+                    </div>
+                </main><!-- final card main -->
+            </article><!-- final card content -->
+            <!-- card footer -->
+            <footer class="card__footer p-1 bg-dark row">
                 <?php
-                //For each to call all actor objecto from actors array 
                 foreach ($this->actors as $actor) {
-                    //Aqui hay que llamar al metodo de actor->showAsCard()
-                    $actor->showAsCard();
+                    $actor->showAsCArd();
                 }
                 ?>
-            </footer>
+            </footer><!-- final footer card -->
             <?php
-        }
+            //Conditional to check if rol is 1 
+            if ($userRol == 1) {
+                //Calling function to create button to modify
+                createButtonsFilm($this->getId());
+            }
+            ?>
+        </article><!-- final container card -->
+        <?php
     }
-    
+}

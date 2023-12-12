@@ -10,6 +10,8 @@ require '../lib/files/cookieSession.php';
 $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
 //Calling file to get code for loaf films
 require '../lib/files/loadFilms.php';
+//Conditional to ceck which modification button was pushed in any film card
+
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +28,7 @@ require '../lib/files/loadFilms.php';
         <link rel="stylesheet" href="../css/all.css">
         <link rel="stylesheet" href="../css/normalize.css">
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/cards.css">
         <link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/nav_horizontal.css">
         <link rel="stylesheet" href="../css/footer.css">
@@ -98,21 +101,18 @@ require '../lib/files/loadFilms.php';
                     ?>
                 </div>
             </div>
-            <main class="center_column main">
+            <main class="center_row flex-wrap p-4 main">
                <?php
                //Conditional to check if si set $films array to call for each
                if(isset($films)){
                    //For each to iterate all films
                    foreach ($films as $peli) {
-                       $peli->showAsCard();
-                       //Conditonal to show buttons depending of user rol
-                       if($rol == 1){
-                           createButtonsFilm($peli->getId());
-                       }
+                       $peli->showAsCard($rol);
                    }
                }
                ?>
             </main>
+            
             <!-- main final -->
             <!-- footer -->
             <footer class=" center_column footer">

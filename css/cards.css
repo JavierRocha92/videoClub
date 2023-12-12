@@ -1,0 +1,51 @@
+.container__card{
+    width: 500px;  
+}
+.card{
+    background-color: transparent; 
+}
+.card__header{
+    /* background-image: url(../assets/images/kill-bill-vol-1-i97652.jpg); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.card__img{
+    display: block;
+    height: 100%;
+}
+.card__main{
+    width: 60%;
+}
+.card__sinopsis{
+    font-size: 0.8rem;
+}
+.card__button{
+    border: 1px solid red;
+}
+.card__link{
+    color: red;
+    width: 200px !important;
+    overflow: hidden;
+    text-align: right;
+}
+.card__icon{
+    color: red;
+    top: 5px;
+    transition: all 0.3s ease;
+}
+.card__button:hover .card__link{
+    opacity: 0;
+    color: black;
+}
+.card__button:hover .card__icon{
+    transform: translate(50%) scale(1.3);
+}
+
+/* actors */
+.card__footer{
+    width: 477px;
+    border-top: 1px solid white;
+}
+.actor__avatar{
+    -webkit-text-stroke-width: 100%;
+}

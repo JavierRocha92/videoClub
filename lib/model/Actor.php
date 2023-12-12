@@ -52,13 +52,17 @@ class Actor {
 
     public function showAsCard() {
         ?>
-        <div class="actor">
-            <h3 class="actor__title fs-5"><?= $this->nombre . ' ' . $this->apellidos ?></h3>
-            <div class="actor__container_image">
-                <img class="actor__image" src="../assets/images/<?= $this->fotografia ?>" alt="alt"/>
-            </div>
-        </div>
-
+        <!-- actor card -->
+                <article class="actor position-relative col-3">
+                    <!-- actor name -->
+                    <p class="actor__name position-absolute">
+                        <?php
+                        echo $this->nombre;
+                        ?>
+                    </p>
+                    <!-- actor avatar -->
+                    <img src="../assets/images/actors/<?= $this->fotografia ?>" class="actor__avatar" alt="">
+                </article>
         <?php
     }
 }

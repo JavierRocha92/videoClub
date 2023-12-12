@@ -199,7 +199,7 @@ body{
     margin-top: 20px;
     padding: 10px;
 }
-.card{
+/*.card{
     background-color: transparent;
 }
 .cards__title{
@@ -251,7 +251,7 @@ body{
     color: red;
     text-decoration: none;
 }
-/*card films*/
+card films
 .card{
     display: flex;
     flex-direction: column;
@@ -283,7 +283,7 @@ body{
 .card__footer{
     display: flex;
 }
-/* Individual cards */
+ Individual cards 
 .actor{
     width: 200px;
     border: 1px solid blue;
@@ -299,4 +299,4 @@ body{
 .actor__container_image{
     width: 100%;
     height: 100%;
-}
+}*/
