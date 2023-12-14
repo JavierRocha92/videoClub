@@ -1,8 +1,7 @@
 <?php
 //Create an empty array to storgae all films object into int
 $films = array();
-//Calling function to connect database
-$bd = connectionBBDD('mysql:dbname=videoclub;host=127.0.0.1', 'root', '');
+
 //create a select statement to get all films an its actors
 $sql = getSelectQuery(array('id','titulo','genero','pais','anyo','cartel'), 'peliculas');
 //Calling function to make statemnet by sql got before
@@ -25,12 +24,16 @@ foreach ($result as  $film) {
         $sql .= ')';
         //Calling function to make a statement
         $result = makeStatement($bd, $sql,array($peli->getId()));
-        foreach ($result as $actor) {
+        //Conditional to check if result variable is an array or not
+        if(is_array($result)){
+            foreach ($result as $actor) {
             //Creating an Actor object and fill all attributes
             $act = new Actor($actor['id'], $actor['nombre'], $actor['apellidos'], $actor['fotografia']);
             //Calling funtion to add a new actor for Pelicula object in this foreach iteration
             $peli->addActor($act);
         }
+        }
+        
         //Save into $films array eachr film 
         array_push($films,$peli);
 }

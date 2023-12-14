@@ -49,3 +49,7 @@
 .actor__avatar{
     -webkit-text-stroke-width: 100%;
 }
+.actor__name{
+    font-size: 0.8rem;
+    color: black;
+}

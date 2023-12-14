@@ -8,16 +8,16 @@ class Pelicula {
     private $pais;
     private $anyo;
     private $cartel;
-    private array $actors;
+    private array $actores = [];
 
-    public function __construct($id, $titulo, $genero, $pais, $anyo, $cartel, array $actors = []) {//El array se le debe declara como arrya de objetos de actores
+    public function __construct($id, $titulo, $genero, $pais, $anyo, $cartel, array $actores = []) {//El array se le debe declara como arrya de objetos de actores
         $this->id = $id;
         $this->titulo = $titulo;
         $this->genero = $genero;
         $this->pais = $pais;
         $this->anyo = $anyo;
         $this->cartel = $cartel;
-        $this->actors = $actors;
+        $this->actores = $actores;
     }
 
 //    public function __destruct() {
@@ -72,12 +72,12 @@ class Pelicula {
         $this->cartel = $cartel;
     }
 
-    public function getActors(): array {
-        return $this->actors;
+    public function getActores(): array {
+        return $this->actores;
     }
 
-    public function setActors(array $actors): void {
-        $this->actors = $actors;
+    public function setActores(array $actors): void {
+        $this->actores = $actors;
     }
 
     public function __toString() {
@@ -90,7 +90,7 @@ class Pelicula {
      * @param Array $actor
      */
     public function addActor($actor) {
-        array_push($this->actors, $actor);
+        array_push($this->actores, $actor);
     }
 
     public function showAsCard($userRol) {
@@ -148,7 +148,7 @@ class Pelicula {
             <!-- card footer -->
             <footer class="card__footer p-1 bg-dark row">
                 <?php
-                foreach ($this->actors as $actor) {
+                foreach ($this->actores as $actor) {
                     $actor->showAsCArd();
                 }
                 ?>
@@ -157,7 +157,7 @@ class Pelicula {
             //Conditional to check if rol is 1 
             if ($userRol == 1) {
                 //Calling function to create button to modify
-                createButtonsFilm($this->getId());
+                createButtonsFilm($this);
             }
             ?>
         </article><!-- final container card -->

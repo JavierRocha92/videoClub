@@ -58,8 +58,49 @@ function makeStatement($bd, $sql, $keyValues = null) {
     }
 }
 
-//Funtions about text process*****************************************************
+function getUpdateQuery($values,$table,$keyWords){
+    $values = array_slice($values,0,-2);
+    $sql = "UPDATE $table SET ";
+    //Conditional to check if values variable is an array
+    if(is_array($values)){
+        foreach ($values as $key => $value) {
+            $sql .= "$key = $value, ";
+        }
+    }
+    //remove last 2 characters from sql
+    $sql = removeCharacter($sql, -2);
+    //Conditional to check if values variable is an array
+    $sql .= ' WHERE ';
+    if(is_array($values)){
+        foreach ($keyWords as $keyWord) {
+            $sql .= "$keyWord = ?, ";
+        }
+    }
+    //remove last 2 characters from sql
+    $sql = removeCharacter($sql, -2);
+    //Adding final statement
+    $sql .= ';';
+    return $sql;
+}
 
+function getDeleteQuery($table, $keyWords = false) {
+    $sql = "DELETE FROM $table WHERE ";
+    foreach ($keyWords as $keyWord) {
+        $sql .= "$keyWord = ?, ";
+    }
+    $sql = removeCharacter($sql, -2);
+    $sql .= ";";
+    return $sql;
+}
+
+//Funtions about text process*****************************************************
+/**
+ * function to create a string by removing amount of character indicated on given parameter
+ * 
+ * @param string $string
+ * @param number $number
+ * @return string
+ */
 function removeCharacter($string, $number) {
     return substr($string, 0, $number);
 }
@@ -78,18 +119,82 @@ function displayError($content) {
 }
 
 //Functions about cookies
-
+/**
+ * function to create a encrypted string based on session_id and is joining
+ * 
+ * @param string $session_id
+ * @param number $id
+ * @return string
+ */
 function getSessionCookieName($session_id, $id) {
     return hash('sha256', ($session_id . $id));
 }
 
 //Funtions about create elements
-
-function createButtonsFilm($id) {
+/**
+ * function to create a form with two buttons inside
+ * 
+ * @param number $id
+ */
+function createButtonsFilm($object) {
     ?>
+    <!--button form-->
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="card__buttons d-flex justify-content-around p-2 w-50">
-        <button class="btn bg-primary text-light" name="delete" value="<?= $id ?>">Eliminar</button>
-        <button class="btn bg-primary text-light" name="update" value="<?= $id ?>">Modificar</button>
-    </form>
+        <!--delete button-->
+        <button class="btn bg-primary text-light" name="option" value="delete">Eliminar</button>
+        <!--update button--> 
+        <button class="btn bg-primary text-light" name="option" value="update">Modificar</button>
+        <!--insert button--> 
+        <button class="btn bg-primary text-light" name="option" value="insert">Insertar</button>
+        <!--hidden input to send serialize object-->
+        <input type="hidden" name="film" value="<?= base64_encode((serialize($object))) ?>">
+    </form><!--final button form-->
+    <?php
+}
+/**
+ * function to return maxlenght attribute value by checking value input given as parameter
+ * 
+ * @param string $value name form input
+ * @return int vlaue for maxenght attribute for any input
+ */
+function getMaxLeght($value){
+    if($value == 'nombre' || $value == 'apellidos'){
+        return 100;
+    }
+    if($value == 'fotografia' || $value == 'genero' || $value == 'cartel' || $value == 'password'){
+        return 255;
+    }
+    if($value == 'id' || $value == 'anyo'){
+        return 11;
+    }
+    if($value == 'genero' || $value == 'pais' || $value == 'username'){
+        return 50;
+    }
+    if($value == 'rol'){
+        return 4;
+    }
+}
+/**
+ * function to return type from a input by checking its value given as parameter
+ * 
+ * @param string $value value froma input
+ * @return string type for a input
+ */
+function getInputType($value){
+    if($value == 'id' || $value == 'anyo' || $value == 'rol'){
+        return 'number';
+    }else{
+        if($value == 'password'){
+            return 'password';
+        }
+        else{
+            return 'text';
+        }
+    }
+}
+
+function createInput($type,$name,$value,$class,$placeholder,$maxLenght){
+    ?>
+    <input class="<?= $class ?>" type="<?= $type ?>" name='<?= $name ?>' value='<?= $value?>' required placeholder='<?= $placeholder?>' maxlength="<?= $maxLenght ?>">
     <?php
 }

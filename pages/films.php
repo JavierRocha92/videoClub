@@ -1,6 +1,8 @@
 <?php
 require '../lib/functions.php';
 session_start();
+//Calling function to connect database
+$bd = connectionBBDD('mysql:dbname=videoclub;host=127.0.0.1', 'root', '');
 require '../lib/files/allowManagement.php';
 //Require class files
 require '../lib/model/Actor.php';
@@ -8,10 +10,10 @@ require '../lib/model/Pelicula.php';
 //Cookie management
 require '../lib/files/cookieSession.php';
 $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
+//Conditional to ceck which modification button was pushed in any film card
+require '../lib/files/checkOptionUser.php';
 //Calling file to get code for loaf films
 require '../lib/files/loadFilms.php';
-//Conditional to ceck which modification button was pushed in any film card
-
 ?>
 
 <!DOCTYPE html>

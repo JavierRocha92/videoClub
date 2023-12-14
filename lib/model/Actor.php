@@ -55,9 +55,9 @@ class Actor {
         <!-- actor card -->
                 <article class="actor position-relative col-3">
                     <!-- actor name -->
-                    <p class="actor__name position-absolute">
+                    <p class="actor__name fw-bold position-absolute">
                         <?php
-                        echo $this->nombre;
+                        echo $this->nombre.' '.$this->apellidos;
                         ?>
                     </p>
                     <!-- actor avatar -->
