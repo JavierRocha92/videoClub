@@ -1,8 +1,8 @@
 .container__card{
-    width: 500px;  
+    width: 500px;
 }
 .card{
-    background-color: transparent; 
+    background-color: transparent;
 }
 .card__header{
     /* background-image: url(../assets/images/kill-bill-vol-1-i97652.jpg); */
@@ -21,6 +21,28 @@
 }
 .card__button{
     border: 1px solid red;
+}
+.card__button--film{
+    background-color: transparent;
+    width: 150px;
+    color: red;
+}
+.card__button--film:hover{
+    background-color: red;
+    color: black;
+}
+.form__insert{
+    position: fixed;
+    top: 300px;
+    right: 20px;
+    width: 140px;
+    z-index: 100;
+}
+.card__button--insert{
+    border: 0;
+    background: rgb(247,215,86);
+    background: linear-gradient(90deg, rgba(247,215,86,1) 0%, rgba(247,215,86,1) 0%, rgba(86,247,237,1) 100%);
+
 }
 .card__link{
     color: red;

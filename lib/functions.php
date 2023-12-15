@@ -18,6 +18,30 @@ function connectionBBDD($cadena, $user = 'root', $password = '') {
     }
 }
 
+function getInsertQuery($values, $table) {
+    //Slice the last value 
+    $values = array_slice($values, 0,-1);
+    $sql = "INSERT INTO $table (";
+    //For each to write fields for any statemente as key
+    foreach ($values as $key => $value) {
+        $sql .= "$key, ";
+    }
+    //Remove two last characters
+    $sql = removeCharacter($sql, -2);
+    $sql .= ') VALUES(';
+    //For each to write values
+    foreach ($values as $value) {
+        if(is_numeric($value))
+        $sql .= "$value, ";
+        else
+        $sql .= "'$value', ";
+    }
+    //Remove two last characters
+    $sql = removeCharacter($sql, -2);
+    $sql .= ');';
+    return $sql;
+}
+
 function getSelectQuery($values, $table, $keyWords = false) {
     $sql = 'SELECT ';
     foreach ($values as $value) {//For each to bulid fileds 
@@ -58,20 +82,24 @@ function makeStatement($bd, $sql, $keyValues = null) {
     }
 }
 
-function getUpdateQuery($values,$table,$keyWords){
-    $values = array_slice($values,0,-2);
+function getUpdateQuery($values, $table, $keyWords) {
+    $values = array_slice($values, 0, -2);
     $sql = "UPDATE $table SET ";
     //Conditional to check if values variable is an array
-    if(is_array($values)){
+    if (is_array($values)) {
         foreach ($values as $key => $value) {
-            $sql .= "$key = $value, ";
+            if (is_numeric($value)) {//Conditional to check if value is numeric
+                $sql .= "$key = $value, ";
+            } else {//Contitinal to check if valur is not numeric
+                $sql .= "$key = '$value', ";
+            }
         }
     }
     //remove last 2 characters from sql
     $sql = removeCharacter($sql, -2);
     //Conditional to check if values variable is an array
     $sql .= ' WHERE ';
-    if(is_array($values)){
+    if (is_array($values)) {
         foreach ($keyWords as $keyWord) {
             $sql .= "$keyWord = ?, ";
         }
@@ -141,60 +169,59 @@ function createButtonsFilm($object) {
     <!--button form-->
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="card__buttons d-flex justify-content-around p-2 w-50">
         <!--delete button-->
-        <button class="btn bg-primary text-light" name="option" value="delete">Eliminar</button>
+        <button class="card__button card__button--film m-2 p-1" name="option" value="delete">Eliminar</button>
         <!--update button--> 
-        <button class="btn bg-primary text-light" name="option" value="update">Modificar</button>
-        <!--insert button--> 
-        <button class="btn bg-primary text-light" name="option" value="insert">Insertar</button>
+        <button class="card__button card__button--film m-2 p-1" name="option" value="update">Modificar</button>
         <!--hidden input to send serialize object-->
         <input type="hidden" name="film" value="<?= base64_encode((serialize($object))) ?>">
     </form><!--final button form-->
     <?php
 }
+
 /**
  * function to return maxlenght attribute value by checking value input given as parameter
  * 
  * @param string $value name form input
  * @return int vlaue for maxenght attribute for any input
  */
-function getMaxLeght($value){
-    if($value == 'nombre' || $value == 'apellidos'){
+function getMaxLeght($value) {
+    if ($value == 'nombre' || $value == 'apellidos') {
         return 100;
     }
-    if($value == 'fotografia' || $value == 'genero' || $value == 'cartel' || $value == 'password'){
+    if ($value == 'fotografia' || $value == 'genero' || $value == 'cartel' || $value == 'password') {
         return 255;
     }
-    if($value == 'id' || $value == 'anyo'){
+    if ($value == 'id' || $value == 'anyo') {
         return 11;
     }
-    if($value == 'genero' || $value == 'pais' || $value == 'username'){
+    if ($value == 'genero' || $value == 'pais' || $value == 'username') {
         return 50;
     }
-    if($value == 'rol'){
+    if ($value == 'rol') {
         return 4;
     }
 }
+
 /**
  * function to return type from a input by checking its value given as parameter
  * 
  * @param string $value value froma input
  * @return string type for a input
  */
-function getInputType($value){
-    if($value == 'id' || $value == 'anyo' || $value == 'rol'){
+function getInputType($value) {
+    if ($value == 'id' || $value == 'anyo' || $value == 'rol') {
         return 'number';
-    }else{
-        if($value == 'password'){
+    } else {
+        if ($value == 'password') {
             return 'password';
-        }
-        else{
+        } else {
             return 'text';
         }
     }
 }
 
-function createInput($type,$name,$value,$class,$placeholder,$maxLenght){
+function createInput($type, $name, $value, $class, $placeholder, $maxLenght) {
     ?>
-    <input class="<?= $class ?>" type="<?= $type ?>" name='<?= $name ?>' value='<?= $value?>' required placeholder='<?= $placeholder?>' maxlength="<?= $maxLenght ?>">
+    <input class="<?= $class ?>" type="<?= $type ?>" name='<?= $name ?>' value='<?= $value ?>' required placeholder='<?= $placeholder ?>' maxlength="<?= $maxLenght ?>">
     <?php
 }

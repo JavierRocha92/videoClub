@@ -112,7 +112,7 @@ class Pelicula {
                     <div class="card__info d-flex justify-content-between col-10 mb-4">
                         <!-- film year launch -->
                         <span class="card__year">
-                            2002
+                            <?= $this->getAnyo() ?>
                         </span>
                         <!-- film duration -->
                         <span class="card__duration">

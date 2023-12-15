@@ -104,17 +104,22 @@ require '../lib/files/loadFilms.php';
                 </div>
             </div>
             <main class="center_row flex-wrap p-4 main">
-               <?php
-               //Conditional to check if si set $films array to call for each
-               if(isset($films)){
-                   //For each to iterate all films
-                   foreach ($films as $peli) {
-                       $peli->showAsCard($rol);
-                   }
-               }
-               ?>
+                <?php
+                //Conditional to check if si set $films array to call for each
+                if (isset($films)) {
+                    //For each to iterate all films
+                    foreach ($films as $peli) {
+                        $peli->showAsCard($rol);
+                    }
+                }
+                ?>
+                <!--fixed form for insert button-->
+                <form class="form__insert" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+                    <button class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">Insertar</button>
+                </form>
+                
             </main>
-            
+
             <!-- main final -->
             <!-- footer -->
             <footer class=" center_column footer">

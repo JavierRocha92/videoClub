@@ -4,12 +4,12 @@
 if (isset($_POST['option']) || isset($_POST['response'])) {
     //Filter and storage post values
     $postValues = filter_input_array(INPUT_POST);
-    //Variable to detect if a update is active at that moment
-    $updateingActive = false;
+    //Filter session varibel to know if user confirm a insetion or updating
+    $actionUser = htmlspecialchars($_SESSION['option']);
     //storage filtered variables from post
     $option = htmlspecialchars($_POST['option']);
     $response = isset($postValues['response']) ? $postValues['response'] : null;
-    $object = unserialize(base64_decode(($postValues['film'])));
+    $object = isset($postVaslues) ? unserialize(base64_decode(($postValues['film']))) : null;
     //Coditional to heck value from button user was pressed
     switch ($option) {
         case 'delete':
@@ -31,25 +31,34 @@ if (isset($_POST['option']) || isset($_POST['response'])) {
             exit;
             break;
         case 'insert':
-            //LLamar a una funcion para insertar la pelicula del formularioi que le tenemos que mandar cuando pulse esta opcion
+            //Calling file to show update form for any film
+            require '../lib/files/insertingForm.php';
+            exit;
             break;
         case 'confirm':
             if (isset($response)) {
                 //Conditional to check if response is yes
                 if ($response == 'yes') {
-//                    echo 'esto es lo que vale post values <br>';
-//                    var_dump($_SESSION['filmUpdating']);
-//                    exit;
-                    $sql = getUpdateQuery($_SESSION['filmUpdating'], 'peliculas', array('id'));
-                    echo 'este es el id de la pelicula <br>';
-                    echo $object->getId();
-                    //TENEMOS QUE MIRAR POQUE NO MODIFICA TODAS LAS PELICULAS ASIQUE HAY QUE MIRAR EL ID DE LA CONDICION
-                    exit;
-                    makeStatement($bd, $sql, array($object->getId()));
+                    //Conditional to check id session ooption variable is for updating
+                    if ($actionUser == 'update') {
+                        //Create update statement by calling function
+                        $sql = getUpdateQuery($_SESSION['filmOnAction'], 'peliculas', array('id'));
+                        //Set keywords values
+                        $keyWords = array($object->getId());
+                    }
+                    if($actionUser == 'insert'){
+                        //Create insert statement by calling function
+                        $sql = getInsertQuery($_SESSION['filmOnAction'], 'peliculas');
+                        //Set keywords values
+                        $keyWords = null;
+                    }
+
+                    //Make statement by cllign this function
+                    makeStatement($bd, $sql, $keyWords);
                 }
             } else {
                 //Stprage into seesion variable values from updating form
-                $_SESSION['filmUpdating'] = $postValues;
+                $_SESSION['filmOnAction'] = $postValues;
                 //Calling require document to confirm modification
                 require '../lib/files/confirmationOptionForm.php';
                 exit;

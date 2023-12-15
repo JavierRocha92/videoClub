@@ -1,15 +1,14 @@
 <?php
-//storage update value into session variable to check which statement choose when confirm be yes
-$_SESSION['option'] = 'update';
+//storage insert value into session variable to check which statement choose when confirm be yes
+$_SESSION['option'] = 'insert';
 //Inicialize array with all Pelicula attributes to iterate as array
 $objectAttributes = array(
-    'id' => $object->getId(),
-    'titulo' => $object->getTitulo(),
-    'genero' => $object->getGenero(),
-    'pais' => $object->getPais(),
-    'anyo' => $object->getAnyo(),
-    'cartel' => $object->getCartel(),
-    'actores' => $object->getActores()
+    'id',
+    'titulo',
+    'genero',
+    'pais',
+    'anyo',
+    'cartel'
 );
 ?>
 <!--create tag table-->
@@ -29,7 +28,7 @@ $objectAttributes = array(
     <!--begin body table-->
     <tbody>
         <tr>
-            <!--Begin updating form-->
+            <!--Begin inserting form-->
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
         <?php
         foreach ($objectAttributes as $key => $value) {
@@ -38,9 +37,7 @@ $objectAttributes = array(
             <td>
                 <?php
                 //Conditional to skip actores field
-                if(!is_array($value)){
-                createInput(getInputType($key), $key, $value, 'form__input', '', getMaxLeght($key));
-                }
+                createInput(getInputType($value), $value, '', 'form__input', $value, getMaxLeght($key));
                 ?>
                 <!--Close td tag for each input-->
             </td>
@@ -55,14 +52,6 @@ $objectAttributes = array(
             ?>
             <!--Close td tag for hidden input-->
         </td>
-        <!--Open td tag to save input hidden in object input-->
-        <td>
-            <!--Create hidden input to storage option into int-->
-            <?php
-            createInput('hidden', 'film', base64_encode(serialize($object)), '', '', '');
-            ?>
-            <!--Close td tag for hidden input-->
-        </td>
         <!--create button to confirm changes-->
         <td>
             <button type="submit" name='option' value="confirm">Confirmar</button>
@@ -74,5 +63,6 @@ $objectAttributes = array(
 </tbody>
 <!--final table-->
 </table>
+
 
 
