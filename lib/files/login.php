@@ -2,19 +2,22 @@
 
 require '../functions.php';
 //DEBEMOS DE CREARNOS UN OBJETO PARA LA CONECXION DE LA BASE DE DATOS CON LOS ATRIBUTOS PARA REALIZAR LA CONEXION 
+require '../model/DataBase.php';
+//Create database object
+$bd = new Database();
 //Create a varibale to storage pdo object gerated by calling function to connect database
-$bd = connectionBBDD('mysql:dbname=videoclub;host=127.0.0.1', 'root', '');
+$connection = $bd->connection();
 //Calling function to verify post massage exist and filter it
 if (isset($_POST)) {
     $postValues = filter_input_array(INPUT_POST);
     //Calling function to make a select query to verify if user dani exist in our database
     $sql = getSelectQuery(array('id'), 'usuarios', array('id'));
     //Calling funciton to make a prepare statement and check if return something and storage into variable
-    $result = makeStatement($bd, $sql, array($postValues['id']));
+    $result = makeStatement($connection, $sql, array($postValues['id']));
     if ($result) {
         //Calling function to create a new selec statemenet looking for matching user and password
         $sql = getSelectQuery(array('username', 'rol','id'), 'usuarios', array('id', 'password'));
-        $result = makeStatement($bd, $sql, array($postValues['id'], $postValues['password']));
+        $result = makeStatement($connection, $sql, array($postValues['id'], $postValues['password']));
         //Close connection
         $bd = null;
         if ($result) {

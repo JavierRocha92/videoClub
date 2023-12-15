@@ -1,11 +1,14 @@
 <?php
+//Create bd object from DataBase
+$bd = new DataBase();
 //Create an empty array to storgae all films object into int
 $films = array();
-
+//Create a Db connection
+$connection = $bd->connection();
 //create a select statement to get all films an its actors
 $sql = getSelectQuery(array('id','titulo','genero','pais','anyo','cartel'), 'peliculas');
 //Calling function to make statemnet by sql got before
-$result = makeStatement($bd, $sql);
+$result = makeStatement($connection, $sql);
 //loop all result to create any film for each row
 foreach ($result as  $film) {
     //Create a Pelicula object fill all attributes by taking results form $film array
@@ -23,7 +26,9 @@ foreach ($result as  $film) {
         //Adding close brakets to make perfect sintaxis statement
         $sql .= ')';
         //Calling function to make a statement
-        $result = makeStatement($bd, $sql,array($peli->getId()));
+        $result = makeStatement($connection, $sql,array($peli->getId()));
+        //Close Db connection
+        $bd = null;
         //Conditional to check if result variable is an array or not
         if(is_array($result)){
             foreach ($result as $actor) {

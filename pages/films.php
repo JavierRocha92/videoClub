@@ -1,12 +1,11 @@
 <?php
-require '../lib/functions.php';
 session_start();
-//Calling function to connect database
-$bd = connectionBBDD('mysql:dbname=videoclub;host=127.0.0.1', 'root', '');
-require '../lib/files/allowManagement.php';
+require '../lib/functions.php';
 //Require class files
 require '../lib/model/Actor.php';
 require '../lib/model/Pelicula.php';
+require '../lib/model/DataBase.php';
+require '../lib/files/allowManagement.php';
 //Cookie management
 require '../lib/files/cookieSession.php';
 $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
