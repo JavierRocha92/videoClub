@@ -1,126 +1,5 @@
 <?php
 
-/**
- * funtion to connect to data base
- * 
- * @param string $cadena
- * @param strig $user
- * @param string $password
- * @return \PDO
- */
-function connectionBBDD($cadena, $user = 'root', $password = '') {
-    try {
-        $bd = new PDO($cadena, $user, $password);
-        return $bd;
-    } catch (Exception $ex) {
-        displayError('La apicación esta en labores de mantenimiento');
-        exit;
-    }
-}
-
-function getInsertQuery($values, $table) {
-    //Slice the last value 
-    $values = array_slice($values, 0,-1);
-    $sql = "INSERT INTO $table (";
-    //For each to write fields for any statemente as key
-    foreach ($values as $key => $value) {
-        $sql .= "$key, ";
-    }
-    //Remove two last characters
-    $sql = removeCharacter($sql, -2);
-    $sql .= ') VALUES(';
-    //For each to write values
-    foreach ($values as $value) {
-        if(is_numeric($value))
-        $sql .= "$value, ";
-        else
-        $sql .= "'$value', ";
-    }
-    //Remove two last characters
-    $sql = removeCharacter($sql, -2);
-    $sql .= ');';
-    return $sql;
-}
-
-function getSelectQuery($values, $table, $keyWords = false) {
-    $sql = 'SELECT ';
-    foreach ($values as $value) {//For each to bulid fileds 
-        $sql .= $value . ', ';
-    }
-    //calling function to remove the last two character from a string
-    $sql = removeCharacter($sql, -2);
-    $sql .= " FROM $table";
-    //Conditinal to check if $keywords exists
-    if ($keyWords) {
-        $sql .= " WHERE ";
-        foreach ($keyWords as $value) {//For each to build keyWords
-            $sql .= "$value = ? and ";
-        }
-        //calling function to remove the last two character from a string
-        $sql = removeCharacter($sql, -5);
-    }
-    $sql .= ";";
-    return $sql;
-}
-
-function makeStatement($bd, $sql, $keyValues = null) {
-    try {
-        $result = $bd->prepare($sql);
-        if (isset($keyValues)) {
-            $result->execute($keyValues);
-        } else {
-            $result->execute();
-        }
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            return false;
-        }
-    } catch (Exception $ex) {
-        displayError('La página esta en mantenimiento, disculpen las molestias');
-        return false;
-    }
-}
-
-function getUpdateQuery($values, $table, $keyWords) {
-    $values = array_slice($values, 0, -2);
-    $sql = "UPDATE $table SET ";
-    //Conditional to check if values variable is an array
-    if (is_array($values)) {
-        foreach ($values as $key => $value) {
-            if (is_numeric($value)) {//Conditional to check if value is numeric
-                $sql .= "$key = $value, ";
-            } else {//Contitinal to check if valur is not numeric
-                $sql .= "$key = '$value', ";
-            }
-        }
-    }
-    //remove last 2 characters from sql
-    $sql = removeCharacter($sql, -2);
-    //Conditional to check if values variable is an array
-    $sql .= ' WHERE ';
-    if (is_array($values)) {
-        foreach ($keyWords as $keyWord) {
-            $sql .= "$keyWord = ?, ";
-        }
-    }
-    //remove last 2 characters from sql
-    $sql = removeCharacter($sql, -2);
-    //Adding final statement
-    $sql .= ';';
-    return $sql;
-}
-
-function getDeleteQuery($table, $keyWords = false) {
-    $sql = "DELETE FROM $table WHERE ";
-    foreach ($keyWords as $keyWord) {
-        $sql .= "$keyWord = ?, ";
-    }
-    $sql = removeCharacter($sql, -2);
-    $sql .= ";";
-    return $sql;
-}
-
 //Funtions about text process*****************************************************
 /**
  * function to create a string by removing amount of character indicated on given parameter
@@ -225,3 +104,75 @@ function createInput($type, $name, $value, $class, $placeholder, $maxLenght) {
     <input class="<?= $class ?>" type="<?= $type ?>" name='<?= $name ?>' value='<?= $value ?>' required placeholder='<?= $placeholder ?>' maxlength="<?= $maxLenght ?>">
     <?php
 }
+
+//Functions about action user management********************************************************************************************************************************
+//*********************************************************************************************************************************************************************
+
+function handleDeleteAction($postValues, $object, $bd, $response, $option) {
+    //Conditional to check if response variable is set
+    if (isAfrimativeResponse($response)) {
+        $sql = $bd->getDeleteQuery('peliculas', array('id'));
+        //Create a conecction to database
+        $bd->connection();
+        $bd->makeStatement($bd->getConnection(), $sql, array($object->getId()));
+        //Close DB connection
+        $bd->disconnect();
+    } else {
+        //Calling require document to confirm modification
+        require '../lib/files/confirmationOptionForm.php';
+        exit;
+    }
+}
+
+function handleUpdateAction($actionUser, $object, $option) {
+    //Calling file to show update form for any film
+    require '../lib/files/updatingForm.php';
+    exit;
+}
+
+function handleInsertAction($actionUser, $option) {
+    //Calling file to show insert form for any film
+    require '../lib/files/insertingForm.php';
+    exit;
+}
+
+function handleConfirmAction($postValues, $actionUser, $response, $object, $option, $bd) {
+    if (isAfrimativeResponse($response)) {
+        //Conditional to check id session ooption variable is for updating
+        if ($actionUser == 'update') {
+            //Create update statement by calling function
+            $sql = $bd->getUpdateQuery($_SESSION['filmOnAction'], 'peliculas', array('id'));
+            //Set keywords values
+            $keyWords = array($object->getId());
+        }
+        if ($actionUser == 'insert') {
+            //Create insert statement by calling function
+            $sql = $bd->getInsertQuery($_SESSION['filmOnAction'], 'peliculas');
+            //Set keywords values
+            $keyWords = null;
+        }
+        //Create a conecction to database
+        $bd->connection();
+        //Make statement by cllign this function
+        $bd->makeStatement($bd->getConnection(), $sql, $keyWords);
+        //Close DB connection
+        $bd->disconnect();
+    } else {
+        //Stprage into seesion variable values from updating form
+        $_SESSION['filmOnAction'] = $postValues;
+        //Calling require document to confirm modification
+        require '../lib/files/confirmationOptionForm.php';
+        exit;
+    }
+}
+
+function isAfrimativeResponse($response) {
+    if (isset($response) && $response === 'yes') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//Final about user action management*******************************************************************************************************************************
+//*****************************************************************************************************************************************************************

@@ -5,6 +5,8 @@ require '../lib/functions.php';
 require '../lib/model/Actor.php';
 require '../lib/model/Pelicula.php';
 require '../lib/model/DataBase.php';
+//Create bd object from DataBase
+$bd = new DataBase();
 require '../lib/files/allowManagement.php';
 //Cookie management
 require '../lib/files/cookieSession.php';

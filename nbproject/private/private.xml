@@ -6,11 +6,11 @@
             <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/loadFilms.php</file>
             <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/updatingForm.php</file>
             <file>file:/C:/xampp/htdocs/VideoClub_app/lib/functions.php</file>
-            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/confirmationOptionForm.php</file>
-            <file>file:/C:/xampp/htdocs/VideoClub_app/index.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/model/DataBase.php</file>
             <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/login.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/allowManagement.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/index.php</file>
             <file>file:/C:/xampp/htdocs/VideoClub_app/pages/films.php</file>
-            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/model/Pelicula.php</file>
             <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/checkOptionUser.php</file>
         </group>
     </open-files>
