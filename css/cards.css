@@ -68,8 +68,13 @@
     width: 477px;
     border-top: 1px solid white;
 }
+.actor__name{
+    bottom: 0;
+    height: 40px;
+}
 .actor__avatar{
     -webkit-text-stroke-width: 100%;
+    height: 100px;
 }
 .actor__name{
     font-size: 0.8rem;

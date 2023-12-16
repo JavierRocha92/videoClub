@@ -8,6 +8,7 @@
     top: 90px;
     left: 40%;
     transform: translate(-50%);
+    border: 5px solid black
 }
 .container__form{
     position: relative;
@@ -120,36 +121,11 @@
 
 /* animations */
 .container__form--login{
-    position: absolute;
+    /*position: absolute;*/
+    position: relative;
+    
 }
 .container__form--signup{
-    position: absolute;
-}
-.form__rotate-appear{
-    animation-name: form__rotate-appear;
-    animation-duration: 0.4s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-@keyframes form__rotate-appear {
-    from{
-        transform: rotateY(90deg);
-    }
-    to{
-        transform: rotateY(0);
-    }
-}
-.form__rotate-desappear{
-    animation-name: form__rotate-desappear;
-    animation-duration: 0.4s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-@keyframes form__rotate-desappear {
-    from{
-        transform: rotateY(0);
-    }
-    to{
-        transform: rotateY(90deg);
-    }
+    /*position: absolute;*/
+    position: relative;
 }

@@ -31,7 +31,7 @@ class Database {
 
     public function getInsertQuery($values, $table) {
         //Slice the last value 
-        $values = array_slice($values, 0, -1);
+//        $values = array_slice($values, 0, -1);
         $sql = "INSERT INTO $table (";
         //For each to write fields for any statemente as key
         foreach ($values as $key => $value) {
@@ -94,7 +94,7 @@ class Database {
     }
 
     public function getUpdateQuery($values, $table, $keyWords) {
-        $values = array_slice($values, 0, -2);
+//        $values = array_slice($values, 0, -2);
         $sql = "UPDATE $table SET ";
         //Conditional to check if values variable is an array
         if (is_array($values)) {
@@ -129,6 +129,19 @@ class Database {
         }
         $sql = removeCharacter($sql, -2);
         $sql .= ";";
+        return $sql;
+    }
+
+    public function getSubQuery($sql, $subsql) {
+        //Calling function to remove final characters
+        $sql = removeCharacter($sql, -1);
+        //Add charatcer to sql to link a subquery
+        $sql .= " WHERE id in (";
+        $sql .= $subsql;
+        //Calling function to remove final characters
+        $sql = removeCharacter($sql, -1);
+        //Adding close brakets to make perfect sintaxis statement
+        $sql .= ')';
         return $sql;
     }
 }

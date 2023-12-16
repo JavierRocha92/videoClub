@@ -1,5 +1,4 @@
 <?php
-
 //Conditional to check if user pushed any button to modifiy any film
 if (isset($_POST['option']) || isset($_POST['response'])) {
     $postValues = filter_input_array(INPUT_POST);

@@ -69,11 +69,11 @@ const exchangeMenu = () => {
 
 //event to catch a click on user icon from nav
 
-user_icon.addEventListener('click',manageForms)
+//user_icon.addEventListener('click',manageForms)
 
 //event to catch a click on menu icon from nav
 
 menu_icon.addEventListener('click',exchangeMenu)
 
 //events to catcha a clikck on container_forms
-container__forms.addEventListener('click',checkElement)
+//container__forms.addEventListener('click',checkElement)

@@ -53,9 +53,9 @@ class Actor {
     public function showAsCard() {
         ?>
         <!-- actor card -->
-                <article class="actor position-relative col-3">
+                <article class="actor d-flex flex-column col-3">
                     <!-- actor name -->
-                    <p class="actor__name fw-bold position-absolute">
+                    <p class="actor__name fw-bold p-0 m-0 text-center text-light">
                         <?php
                         echo $this->nombre.' '.$this->apellidos;
                         ?>

@@ -1,5 +1,22 @@
 <?php
 
+//Functions about cookies and session*********************************************
+//********************************************************************************
+/**
+ * function to storage user values into session variable
+ * 
+ * @param array $values
+ */
+function setSessionVar($values) {
+    $_SESSION['rol'] = $values['rol'];
+    $_SESSION['username'] = $values['username'];
+    $id = $values['id'];
+    $_SESSION['id'] = $id;
+}
+
+//Final about cookies and sessions************************************************
+//********************************************************************************
+
 //Funtions about text process*****************************************************
 /**
  * function to create a string by removing amount of character indicated on given parameter
@@ -141,13 +158,13 @@ function handleConfirmAction($postValues, $actionUser, $response, $object, $opti
         //Conditional to check id session ooption variable is for updating
         if ($actionUser == 'update') {
             //Create update statement by calling function
-            $sql = $bd->getUpdateQuery($_SESSION['filmOnAction'], 'peliculas', array('id'));
+            $sql = $bd->getUpdateQuery(array_slice($_SESSION['filmOnAction'],0,-2), 'peliculas', array('id'));
             //Set keywords values
             $keyWords = array($object->getId());
         }
         if ($actionUser == 'insert') {
             //Create insert statement by calling function
-            $sql = $bd->getInsertQuery($_SESSION['filmOnAction'], 'peliculas');
+            $sql = $bd->getInsertQuery(array_slice($_SESSION['filmOnAction'],0,-1), 'peliculas');
             //Set keywords values
             $keyWords = null;
         }
@@ -175,4 +192,28 @@ function isAfrimativeResponse($response) {
 }
 
 //Final about user action management*******************************************************************************************************************************
+//*****************************************************************************************************************************************************************
+//Function about checking into databse*****************************************************************************************************************************
+//*****************************************************************************************************************************************************************
+
+/**
+ * function to check if a user with id given as parameter is in databse
+ * 
+ * @param DaaBase $bd Dtabase class instance
+ * @param string $id key value for user who will be serached in database
+ * @return PDO 
+ */
+function idUserExists($bd, $username) {
+    //Create a databse connection 
+    $bd->connection();
+    //Create a select statement
+    $sql = $bd->getSelectQuery(array('*'), 'usuarios', array('username'));
+//    echo $sql;
+//    exit;
+    //get result form  statement
+    $result = $bd->makeStatement($bd->getConnection(), $sql, array($username));
+    $bd->disconnect();
+    return $result;
+}
+//Final about checking into databse********************************************************************************************************************************
 //*****************************************************************************************************************************************************************

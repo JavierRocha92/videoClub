@@ -106,7 +106,7 @@ require './lib/functions.php';
                                     displayError('Usuario y/o contraseña incorrectos');
                                 }
                                 ?>
-                                <input type="text" name="id" required class="form__input" placeholder="Type your id">
+                                <input type="text" name="username" required class="form__input" placeholder="Type your username">
                                 <input type="password" name="password" required class="form__input" placeholder="Type your password">
                                 <div class="center_row checkbox">
                                     <input type="checkbox" name="terms" class="form__input form__input--checkbox">
@@ -150,9 +150,9 @@ require './lib/functions.php';
                             <!-- form to enter your data -->
                             <form action="./lib/files/register.php" method="post" class="center_column form form--login">
                                 <input type="text" required name="id" class="form__input" placeholder="Type your id">
+                                <input type="text" required name="username" class="form__input" placeholder="Type your username">
                                 <input type="password" required name="password" class="form__input" placeholder="Type your password">
-                                <input type="password" required name="rep_password" class="form__input"
-                                       placeholder="Type your password again">
+                                <input type="number" required name="rol" class="form__input" placeholder="Type your rol">
                                 <div class="center_row checkbox">
                                     <input type="checkbox" name="terms" class="form__input form__input--checkbox">
                                     <label class="form__label" for="terms">Accept terms about private policy</label>

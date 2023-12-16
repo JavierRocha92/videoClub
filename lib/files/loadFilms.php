@@ -17,16 +17,10 @@ foreach ($result as $film) {
     $peli = new Pelicula($film['id'], $film['titulo'], $film['genero'], $film['pais'], $film['anyo'], $film['cartel']);
     //Create sql to get actor for a peli in thid iteration
     $sql = $bd->getSelectQuery(array('id', 'nombre', 'apellidos', 'fotografia'), 'actores');
-    //Calling function to remove final characters
-    $sql = removeCharacter($sql, -1);
-    //Add charatcer to sql to link a subquery
-    $sql .= " WHERE id in (";
+    //Cretate subquery by calling function
     $subsql = $bd->getSelectQuery(array('idActor'), 'actuan', array('idPelicula'));
-    $sql .= $subsql;
-    //Calling function to remove final characters
-    $sql = removeCharacter($sql, -1);
-    //Adding close brakets to make perfect sintaxis statement
-    $sql .= ')';
+    //Calling function to create a query by joining subqueries
+    $sql = $bd->getSubquery($sql, $subsql);
     //Create a datbase connection
     $bd->connection();
     //Calling function to make a statement
