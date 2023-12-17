@@ -137,25 +137,23 @@ function handleDeleteAction($postValues, $object, $bd, $response, $option) {
     } else {
         //Calling require document to confirm modification
         require '../lib/files/confirmationOptionForm.php';
-        exit;
     }
 }
 
 function handleUpdateAction($actionUser, $object, $option) {
     //Calling file to show update form for any film
     require '../lib/files/updatingForm.php';
-    exit;
 }
 
 function handleInsertAction($actionUser, $option) {
     //Calling file to show insert form for any film
     require '../lib/files/insertingForm.php';
-    exit;
 }
 
 function handleConfirmAction($postValues, $actionUser, $response, $object, $option, $bd) {
-    if (isAfrimativeResponse($response)) {
-        //Conditional to check id session ooption variable is for updating
+    if (isset($response)) {
+        if($response === 'yes'){
+            //Conditional to check id session ooption variable is for updating
         if ($actionUser == 'update') {
             //Create update statement by calling function
             $sql = $bd->getUpdateQuery(array_slice($_SESSION['filmOnAction'],0,-2), 'peliculas', array('id'));
@@ -174,12 +172,14 @@ function handleConfirmAction($postValues, $actionUser, $response, $object, $opti
         $bd->makeStatement($bd->getConnection(), $sql, $keyWords);
         //Close DB connection
         $bd->disconnect();
-    } else {
+        }else{//Conditinal when response is not yes, is not
+            header('Location: ./films.php');
+        }
+    } else {//Condtional when reposne does not exist
         //Stprage into seesion variable values from updating form
         $_SESSION['filmOnAction'] = $postValues;
         //Calling require document to confirm modification
         require '../lib/files/confirmationOptionForm.php';
-        exit;
     }
 }
 

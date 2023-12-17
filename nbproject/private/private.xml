@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>lib/files/confirmationOptionForm.php</url>
+            <bookmark id="1">
+                <name/>
+                <line>3</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/VideoClub_app/js/script.js</file>
-            <file>file:/C:/xampp/htdocs/VideoClub_app/index.php</file>
-            <file>file:/C:/xampp/htdocs/VideoClub_app/css/form.css</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/loadFilms.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/updatingForm.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/functions.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/insertingForm.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/confirmationOptionForm.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/pages/films.php</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/css/modal.css</file>
+            <file>file:/C:/xampp/htdocs/VideoClub_app/lib/files/checkOptionUser.php</file>
         </group>
     </open-files>
 </project-private>

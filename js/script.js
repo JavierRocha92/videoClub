@@ -7,7 +7,12 @@ const menu_icon = document.getElementById('menu_icon')
 const user_icon = document.getElementById('user_icon')
 const nav = document.getElementById('nav')
 
-
+//const myModal = document.getElementById('myModal')
+//const myInput = document.getElementById('myInput')
+//
+//myModal.addEventListener('shown.bs.modal', () => {
+//  myInput.focus()
+//})
 
 /**
  * funciton to change a form view by other depending ehich of them is on screen

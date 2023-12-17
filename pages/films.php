@@ -11,7 +11,6 @@ require '../lib/files/allowManagement.php';
 //Cookie management
 require '../lib/files/cookieSession.php';
 $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
-//Conditional to ceck which modification button was pushed in any film card
 require '../lib/files/checkOptionUser.php';
 //Calling file to get code for loaf films
 require '../lib/files/loadFilms.php';
@@ -32,6 +31,7 @@ require '../lib/files/loadFilms.php';
         <link rel="stylesheet" href="../css/normalize.css">
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="../css/cards.css">
+        <link rel="stylesheet" href="../css/modal.css">
         <link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/nav_horizontal.css">
         <link rel="stylesheet" href="../css/footer.css">
@@ -39,9 +39,17 @@ require '../lib/files/loadFilms.php';
         <!-- FONT-AWESOME REMOTE LIBRARY -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
-
+    <!--body begin-->
     <body>
+        <!--fixed form for insert button-->
+        <form class="form__insert" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+            <button  class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">
+                Insertar
+            </button>
+        </form>
+        <!--container begin-->
         <div class="container center_column">
+            <!--header begin-->
             <header class="header center_row">
             </header>
             <!-- nav sticky container -->
@@ -114,11 +122,7 @@ require '../lib/files/loadFilms.php';
                     }
                 }
                 ?>
-                <!--fixed form for insert button-->
-                <form class="form__insert" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-                    <button class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">Insertar</button>
-                </form>
-                
+
             </main>
 
             <!-- main final -->
@@ -184,7 +188,7 @@ require '../lib/files/loadFilms.php';
 
         </div>
         <!-- BOOTSTRAP JS FILE -->
-        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
         <!-- OTHER JS FILES -->
         <script src="../js/script.js"></script>
     </body>

@@ -199,104 +199,10 @@ body{
     margin-top: 20px;
     padding: 10px;
 }
-/*.card{
-    background-color: transparent;
+/*modal styles*/
+/*.modal{
+    z-index: 200!important;
 }
-.cards__title{
-    color: white;
-    border-bottom: 5px solid white;
-    width: 100%;
-    padding: 10px;
-    font-size: 1.5rem;
-    font-variant: small-caps;
-}
-.card__title{
-    width: 100%;
-    color: white;
-    border-bottom: 1px solid white;
-    padding: 5px;
-    font-size: 1.2rem;
-}
-.card__content{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-.card__image{
-    width: 100%;
-    display: none;
-}
-.card__text{
-    text-align: justify;
-    width: 100%;
-}
-.card__footer{
-    width: 100%;
-    border-bottom: 1px solid white;
-    border-top: 1px solid white;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    padding: 10px;
-    display: none;
-}
-.card__text--footer{
-    font-style: italic;
-    margin: 0;
-}
-.card__link{
-    color: red;
-    text-decoration: none;
-}
-card films
-.card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 800px;
-    border: 1px solid red;
-    position: relative;
-}
-.card__visor{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-.card__header{
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.511);
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-}
-.container__image{
-    width: 100%;
-}
-.visor__image,.actor__image{
-    width: 100%;
-    height: 100%;
-}
-.card__footer{
-    display: flex;
-}
- Individual cards 
-.actor{
-    width: 200px;
-    border: 1px solid blue;
-    position: relative;
-}
-.actor__title{
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    width: 100%;
-    text-align: center;
-}
-.actor__container_image{
-    width: 100%;
-    height: 100%;
+.modal-dialog{
+    z-index: 201!important
 }*/
