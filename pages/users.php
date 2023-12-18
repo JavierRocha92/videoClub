@@ -1,11 +1,10 @@
 <?php
 session_start();
-//Set table name value
-$table = 'peliculas';
+//Set table name value 
+$table = 'usuarios';
 require '../lib/functions.php';
 //Require class files
-require '../lib/model/Actor.php';
-require '../lib/model/Pelicula.php';
+require '../lib/model/Usuario.php';
 require '../lib/model/DataBase.php';
 //Create bd object from DataBase
 $bd = new DataBase();
@@ -15,7 +14,7 @@ require '../lib/files/cookieSession.php';
 $lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
 require '../lib/files/checkOptionUser.php';
 //Calling file to get code for loaf films
-require '../lib/files/loadFilms.php';
+require '../lib/files/loadUsers.php';
 ?>
 
 <!DOCTYPE html>
@@ -48,8 +47,7 @@ require '../lib/files/loadFilms.php';
             <button  class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">
                 Insertar
             </button>
-            <!--hidden input with object values array-->
-            <input type="hidden" name='objectIds' value='<?= base64_encode(serialize(array('id', 'titulo', 'genero', 'pais', 'anyo', 'cartel'))) ?>' > 
+            <input type="hidden" name='objectIds' value='<?= base64_encode(serialize(array('id','username','password','rol'))) ?>' > 
         </form>
         <!--container begin-->
         <div class="container center_column">
@@ -74,16 +72,8 @@ require '../lib/files/loadFilms.php';
                                                                             class="nav__link nav__link--home">Home</a></li>
                         <li class="center_row nav__item nav__item--comma"><a href="./films.php"
                                                                              class="nav__link nav__link--comma">Films</a></li>
-                            <?php
-                            //Conditional to chek if user rol is 1
-                            if ($rol == 1) {
-                                ?>
-                            <li class="center_row nav__item nav__item--comma"><a href="./users.php"
-                                                                                 class="nav__link nav__link--comma">Users</a></li>
-                                <?php
-                            }
-                            ?>
-
+                        <li class="center_row nav__item nav__item--comma"><a href="./users.php"
+                                                                             class="nav__link nav__link--comma">Users</a></li>
                         <li class="center_row nav__item nav__item--comma"><a href="./seo.html"
                                                                              class="nav__link nav__link--comma">Seo</a></li>
                         <li class="center_row nav__item nav__item--last"><a href="#"
@@ -127,10 +117,10 @@ require '../lib/files/loadFilms.php';
             <main class="center_row flex-wrap p-4 main">
                 <?php
                 //Conditional to check if si set $films array to call for each
-                if (isset($films)) {
+                if (isset($users)) {
                     //For each to iterate all films
-                    foreach ($films as $peli) {
-                        $peli->showAsCard($rol);
+                    foreach ($users as $user) {
+                        $user->showAsCard();
                     }
                 }
                 ?>

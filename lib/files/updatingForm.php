@@ -2,15 +2,8 @@
 //storage update value into session variable to check which statement choose when confirm be yes
 $_SESSION['option'] = 'update';
 //Inicialize array with all Pelicula attributes to iterate as array
-$objectAttributes = array(
-    'id' => $object->getId(),
-    'titulo' => $object->getTitulo(),
-    'genero' => $object->getGenero(),
-    'pais' => $object->getPais(),
-    'anyo' => $object->getAnyo(),
-    'cartel' => $object->getCartel(),
-    'actores' => $object->getActores()
-);
+//Get object attributes by calling function given table name as parameter
+$objectAttributes = getArrayByObject($table, $object);
 ?>
 <!--contianer modal updating-->
 <div class="modal_window d-flex flex-column justify-content-around">
@@ -18,17 +11,24 @@ $objectAttributes = array(
     <h2 class="modal__title text-light">MODIFICA LOS CAMPOS DE LA PELICULA</h2>
     <!--create tag table-->
     <table>
-        <!--table header-->
+        <!--table header-->-->
         <thead>
-            <tr>
-                <th class="th text-light">Id</th>
-                <th class="th text-light">Título</th>
-                <th class="th text-light">Género</th>
-                <th class="th text-light">País</th>
-                <th class="th text-light">Año</th>
-                <th class="th text-light">Cartel</th>
-                <!--<th>Actores</th>-->
-            </tr>
+            <?php
+            foreach ($objectAttributes as $key => $value) {
+                ?>
+            <th class="th text-light"><?= $key ?></th>
+            <?php
+        }
+        ?>
+<!--            <tr>
+            <th class="th text-light">Id</th>
+            <th class="th text-light">Título</th>
+            <th class="th text-light">Género</th>
+            <th class="th text-light">País</th>
+            <th class="th text-light">Año</th>
+            <th class="th text-light">Cartel</th>
+            <th>Actores</th>
+        </tr>-->
         </thead>
         <!--begin body table-->
         <tbody>
@@ -81,7 +81,7 @@ $objectAttributes = array(
     <!--modal container final-->
 
     <!--button to get out-->
-    <a class="text-decoration-none bg-primary text-light fs-3 p-2 pe-5 ps-5 form__link" href="films.php">Salir</a>
+    <a class="text-decoration-none bg-primary text-light fs-3 p-2 pe-5 ps-5 form__link" href="<?= getPathByTable($table) ?>">Salir</a>
 </div>
 
 

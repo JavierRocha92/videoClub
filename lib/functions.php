@@ -16,7 +16,6 @@ function setSessionVar($values) {
 
 //Final about cookies and sessions************************************************
 //********************************************************************************
-
 //Funtions about text process*****************************************************
 /**
  * function to create a string by removing amount of character indicated on given parameter
@@ -125,10 +124,10 @@ function createInput($type, $name, $value, $class, $placeholder, $maxLenght) {
 //Functions about action user management********************************************************************************************************************************
 //*********************************************************************************************************************************************************************
 
-function handleDeleteAction($postValues, $object, $bd, $response, $option) {
+function handleDeleteAction($postValues, $object, $bd, $response, $option,$table) {
     //Conditional to check if response variable is set
     if (isAfrimativeResponse($response)) {
-        $sql = $bd->getDeleteQuery('peliculas', array('id'));
+        $sql = $bd->getDeleteQuery($table, array('id'));
         //Create a conecction to database
         $bd->connection();
         $bd->makeStatement($bd->getConnection(), $sql, array($object->getId()));
@@ -140,39 +139,39 @@ function handleDeleteAction($postValues, $object, $bd, $response, $option) {
     }
 }
 
-function handleUpdateAction($actionUser, $object, $option) {
+function handleUpdateAction($actionUser, $object, $option,$table) {
     //Calling file to show update form for any film
     require '../lib/files/updatingForm.php';
 }
 
-function handleInsertAction($actionUser, $option) {
+function handleInsertAction($actionUser, $option, $objectIds,$table) {
     //Calling file to show insert form for any film
     require '../lib/files/insertingForm.php';
 }
 
-function handleConfirmAction($postValues, $actionUser, $response, $object, $option, $bd) {
+function handleConfirmAction($postValues, $actionUser, $response, $object, $option, $bd,$table) {
     if (isset($response)) {
-        if($response === 'yes'){
+        if ($response === 'yes') {
             //Conditional to check id session ooption variable is for updating
-        if ($actionUser == 'update') {
-            //Create update statement by calling function
-            $sql = $bd->getUpdateQuery(array_slice($_SESSION['filmOnAction'],0,-2), 'peliculas', array('id'));
-            //Set keywords values
-            $keyWords = array($object->getId());
-        }
-        if ($actionUser == 'insert') {
-            //Create insert statement by calling function
-            $sql = $bd->getInsertQuery(array_slice($_SESSION['filmOnAction'],0,-1), 'peliculas');
-            //Set keywords values
-            $keyWords = null;
-        }
-        //Create a conecction to database
-        $bd->connection();
-        //Make statement by cllign this function
-        $bd->makeStatement($bd->getConnection(), $sql, $keyWords);
-        //Close DB connection
-        $bd->disconnect();
-        }else{//Conditinal when response is not yes, is not
+            if ($actionUser == 'update') {
+                //Create update statement by calling function
+                $sql = $bd->getUpdateQuery(array_slice($_SESSION['filmOnAction'], 0, -2), $table, array('id'));
+                //Set keywords values
+                $keyWords = array($object->getId());
+            }
+            if ($actionUser == 'insert') {
+                //Create insert statement by calling function
+                $sql = $bd->getInsertQuery(array_slice($_SESSION['filmOnAction'], 0, -1), $table);
+                //Set keywords values
+                $keyWords = null;
+            }
+            //Create a conecction to database
+            $bd->connection();
+            //Make statement by cllign this function
+            $bd->makeStatement($bd->getConnection(), $sql, $keyWords);
+            //Close DB connection
+            $bd->disconnect();
+        } else {//Conditinal when response is not yes, is not
             header('Location: ./films.php');
         }
     } else {//Condtional when reposne does not exist
@@ -188,6 +187,37 @@ function isAfrimativeResponse($response) {
         return true;
     } else {
         return false;
+    }
+}
+
+function getArrayByObject($table, $object) {
+    switch ($table) {
+        case 'peliculas':
+            return array(
+                'id' => $object->getId(),
+                'titulo' => $object->getTitulo(),
+                'genero' => $object->getGenero(),
+                'pais' => $object->getPais(),
+                'anyo' => $object->getAnyo(),
+                'cartel' => $object->getCartel(),
+                'actores' => $object->getActores()
+            );
+        case 'usuarios':
+            return array(
+                'id' => $object->getId(),
+                'username' => $object->getUsername(),
+                'password' => $object->getPassword(),
+                'rol' => $object->getRol(),
+            );
+    }
+}
+
+function getPathByTable($table) {
+    switch ($table) {
+        case 'peliculas':
+            return './films.php';
+        case 'usuarios':
+            return './users.php';
     }
 }
 
@@ -215,5 +245,6 @@ function idUserExists($bd, $username) {
     $bd->disconnect();
     return $result;
 }
+
 //Final about checking into databse********************************************************************************************************************************
 //*****************************************************************************************************************************************************************

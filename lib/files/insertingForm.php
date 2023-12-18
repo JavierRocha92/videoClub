@@ -2,14 +2,6 @@
 //storage insert value into session variable to check which statement choose when confirm be yes
 $_SESSION['option'] = 'insert';
 //Inicialize array with all Pelicula attributes to iterate as array
-$objectAttributes = array(
-    'id',
-    'titulo',
-    'genero',
-    'pais',
-    'anyo',
-    'cartel'
-);
 ?>
 <!--container table insertion-->
 <div class="modal_window d-flex flex-column justify-content-around">
@@ -20,14 +12,24 @@ $objectAttributes = array(
         <!--table header-->
         <thead>
             <tr>
+            <?php
+            foreach ($objectIds as $value) {
+                ?>
+            <th class="th text-light"><?= $value ?></th>
+            <?php
+            }
+            
+            ?>
+             </tr>
+<!--            <tr>
                 <th class="th text-light">Id</th>
                 <th class="th text-light">Título</th>
                 <th class="th text-light">Género</th>
                 <th class="th text-light">País</th>
                 <th class="th text-light">Año</th>
                 <th class="th text-light">Cartel</th>
-                <!--<th>Actores</th>-->
-            </tr>
+                <th>Actores</th>
+            </tr>-->
         </thead>
         <!--begin body table-->
         <tbody>
@@ -35,7 +37,7 @@ $objectAttributes = array(
                 <!--Begin inserting form-->
         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
             <?php
-            foreach ($objectAttributes as $key => $value) {
+            foreach ($objectIds as $key => $value) {
                 ?>
                 <!--Open td tag for any input-->
                 <td>
@@ -70,7 +72,7 @@ $objectAttributes = array(
     <!--final modal container-->
 
     <!--button to get out-->
-    <a class="text-decoration-none bg-primary text-light fs-3 p-2 pe-5 ps-5 form__link" href="films.php">Salir</a>
+    <a class="text-decoration-none bg-primary text-light fs-3 p-2 pe-5 ps-5 form__link" href="<?= getPathByTable($table) ?>">Salir</a>
 </div>
 
 

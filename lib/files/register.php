@@ -24,7 +24,7 @@ if (isset($_POST)) {
         //Close databse connection
         $bd->disconnect();
         //Redirection to index
-        header('Location:../indes.php?login');
+        header('Location:../..//index.php?login');
     }
 }
 

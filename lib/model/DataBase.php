@@ -42,14 +42,21 @@ class Database {
         $sql .= ') VALUES(';
         //For each to write values
         foreach ($values as $value) {
-            if (is_numeric($value))
-                $sql .= "$value, ";
-            else
+            if ($value == 'password') {
+                $password = hash('sha256', $value);
                 $sql .= "'$value', ";
+            } else {
+                if (is_numeric($value))
+                    $sql .= "$value, ";
+                if (!is_numeric($value))
+                    $sql .= "'$value', ";
+            }
         }
         //Remove two last characters
         $sql = removeCharacter($sql, -2);
         $sql .= ');';
+        echo $sql;
+        exit;
         return $sql;
     }
 
@@ -71,6 +78,7 @@ class Database {
             $sql = removeCharacter($sql, -5);
         }
         $sql .= ";";
+
         return $sql;
     }
 
