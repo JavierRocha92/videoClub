@@ -1,5 +1,4 @@
 <?php
-
 require '../functions.php';
 require '../model/DataBase.php';
 //Create database object
@@ -43,7 +42,7 @@ if (isset($_POST)) {
             $id = $result[0]['id'];
             $_SESSION['id'] = $id;
             //Cookie session creation
-            setcookie(getSessionCookieName(session_id(), $id), 'sessionActive', time() + 1 * 600, '/');
+            setcookie(getSessionCookieName(session_id(), $id), 'sessionActive', time() + 1 * 30, '/');
             //Redirecting user to private page
             header('Location:../../pages/films.php');
             exit;

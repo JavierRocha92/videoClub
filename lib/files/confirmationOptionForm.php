@@ -8,7 +8,8 @@
         <button class="form__button" type="submit" name="response" value="no">No</button>
         <!--hidden input to dens mofdification option-->
         <input type="hidden" name="option" value="<?= $option ?>">
-        <input type="hidden" name="film" value="<?= base64_encode(serialize($object)) ?>">
+        <input type="hidden" name="table" value="<?= $table ?>">
+        <input type="hidden" name="object" value="<?= base64_encode(serialize($object)) ?>">
     </form>
     <!--endo confirmation form-->
     <!--button to get out-->

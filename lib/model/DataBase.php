@@ -83,6 +83,8 @@ class Database {
     }
 
     public function makeStatement($bd, $sql, $keyValues = null) {
+//        echo $sql;
+//        exit;
         try {
             $result = $bd->prepare($sql);
             if (isset($keyValues)) {

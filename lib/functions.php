@@ -68,7 +68,7 @@ function createButtonsFilm($object) {
         <!--update button--> 
         <button class="card__button card__button--film m-2 p-1" name="option" value="update">Modificar</button>
         <!--hidden input to send serialize object-->
-        <input type="hidden" name="film" value="<?= base64_encode((serialize($object))) ?>">
+        <input type="hidden" name="object" value="<?= base64_encode((serialize($object))) ?>">
     </form><!--final button form-->
     <?php
 }
@@ -124,7 +124,7 @@ function createInput($type, $name, $value, $class, $placeholder, $maxLenght) {
 //Functions about action user management********************************************************************************************************************************
 //*********************************************************************************************************************************************************************
 
-function handleDeleteAction($postValues, $object, $bd, $response, $option,$table) {
+function handleDeleteAction($postValues, $object, $bd, $response, $option, $table) {
     //Conditional to check if response variable is set
     if (isAfrimativeResponse($response)) {
         $sql = $bd->getDeleteQuery($table, array('id'));
@@ -139,32 +139,41 @@ function handleDeleteAction($postValues, $object, $bd, $response, $option,$table
     }
 }
 
-function handleUpdateAction($actionUser, $object, $option,$table) {
+function handleUpdateAction($actionUser, $object, $option, $table) {
     //Calling file to show update form for any film
     require '../lib/files/updatingForm.php';
 }
 
-function handleInsertAction($actionUser, $option, $objectIds,$table) {
+function handleInsertAction($actionUser, $option, $objectIds, $table) {
     //Calling file to show insert form for any film
     require '../lib/files/insertingForm.php';
 }
 
-function handleConfirmAction($postValues, $actionUser, $response, $object, $option, $bd,$table) {
+function handleConfirmAction($postValues, $actionUser, $response, $object, $option, $bd, $table) {
+//    var_dump($object);
+//    exit;
     if (isset($response)) {
         if ($response === 'yes') {
+            $object_attributes = getObjectsAttributes($_SESSION['objectOnAction'], $table);
+//            DENTRO DE ESTE CONDICIONAL SE DEBE IMPLENTAR UN METODO QUE NOS EXTRAIGA DEL ARRYA POST SOLO LOS VALORES NECESARIOS QUE OCINCIDAN CON EL OBJETO  PARA HACER LA CONULTA
             //Conditional to check id session ooption variable is for updating
             if ($actionUser == 'update') {
                 //Create update statement by calling function
-                $sql = $bd->getUpdateQuery(array_slice($_SESSION['filmOnAction'], 0, -2), $table, array('id'));
+                $sql = $bd->getUpdateQuery($object_attributes, $table, array('id'));
                 //Set keywords values
                 $keyWords = array($object->getId());
             }
             if ($actionUser == 'insert') {
                 //Create insert statement by calling function
-                $sql = $bd->getInsertQuery(array_slice($_SESSION['filmOnAction'], 0, -1), $table);
+                $sql = $bd->getInsertQuery($object_attributes, $table);
                 //Set keywords values
                 $keyWords = null;
             }
+//            echo 'esta es la consulta<br>';
+//            echo $sql.'<br>';
+//            echo 'este es el id <br>';
+//            echo $id.'<br>';
+//            exit;
             //Create a conecction to database
             $bd->connection();
             //Make statement by cllign this function
@@ -176,7 +185,7 @@ function handleConfirmAction($postValues, $actionUser, $response, $object, $opti
         }
     } else {//Condtional when reposne does not exist
         //Stprage into seesion variable values from updating form
-        $_SESSION['filmOnAction'] = $postValues;
+        $_SESSION['objectOnAction'] = $postValues;
         //Calling require document to confirm modification
         require '../lib/files/confirmationOptionForm.php';
     }
@@ -218,6 +227,28 @@ function getPathByTable($table) {
             return './films.php';
         case 'usuarios':
             return './users.php';
+    }
+}
+
+function getObjectsAttributes($object, $table) {
+    switch ($table) {
+        case 'peliculas':
+            return array('id' => $object['id'],
+                'titulo' => $object['titulo'],
+                'genero' => $object['genero'],
+                'pais' => $object['pais'],
+                'anyo' => $object['anyo'],
+                'cartel' => $object['cartel']);
+        case 'actores':
+            return array('id' => $object['id'],
+                'nombre' => $object['nombre'],
+                'apellidos' => $object['apellidos'],
+                'fotografia' => $object['fotografia']);
+        case 'usuarios':
+            return array('id' => $object['id'],
+                'username' => $object['username'],
+                'password' => $object['password'],
+                'rol' => $object['rol']);
     }
 }
 

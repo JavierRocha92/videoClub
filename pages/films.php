@@ -1,7 +1,7 @@
 <?php
 session_start();
 //Set table name value
-$table = 'peliculas';
+$table = isset($_POST['table']) ? htmlspecialchars(($_POST['table'])) : 'peliculas';
 require '../lib/functions.php';
 //Require class files
 require '../lib/model/Actor.php';
@@ -43,14 +43,20 @@ require '../lib/files/loadFilms.php';
     </head>
     <!--body begin-->
     <body>
-        <!--fixed form for insert button-->
-        <form class="form__insert" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-            <button  class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">
-                Insertar
-            </button>
-            <!--hidden input with object values array-->
-            <input type="hidden" name='objectIds' value='<?= base64_encode(serialize(array('id', 'titulo', 'genero', 'pais', 'anyo', 'cartel'))) ?>' > 
-        </form>
+        <?php
+        if ($rol == 1) {
+            ?>
+            <!--fixed form for insert button-->
+            <form class="form__insert" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+                <button  class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">
+                    Insertar
+                </button>
+                <!--hidden input with object values array-->
+                <input type="hidden" name='objectIds' value='<?= base64_encode(serialize(array('id', 'titulo', 'genero', 'pais', 'anyo', 'cartel'))) ?>' > 
+            </form>
+            <?php
+        }
+        ?>
         <!--container begin-->
         <div class="container center_column">
             <!--header begin-->

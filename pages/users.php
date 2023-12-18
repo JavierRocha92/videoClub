@@ -42,13 +42,19 @@ require '../lib/files/loadUsers.php';
     </head>
     <!--body begin-->
     <body>
-        <!--fixed form for insert button-->
-        <form class="form__insert" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-            <button  class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">
-                Insertar
-            </button>
-            <input type="hidden" name='objectIds' value='<?= base64_encode(serialize(array('id','username','password','rol'))) ?>' > 
-        </form>
+        <?php
+        if ($rol == 1) {
+            ?>
+            <!--fixed form for insert button-->
+            <form class="form__insert" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+                <button  class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">
+                    Insertar
+                </button>
+                <input type="hidden" name='objectIds' value='<?= base64_encode(serialize(array('id', 'username', 'password', 'rol'))) ?>' > 
+            </form>
+            <?php
+        }
+        ?>
         <!--container begin-->
         <div class="container center_column">
             <!--header begin-->
