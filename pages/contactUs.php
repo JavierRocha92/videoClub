@@ -1,23 +1,3 @@
-<?php
-session_start();
-//Set table name value
-$table = isset($_POST['table']) ? htmlspecialchars(($_POST['table'])) : 'peliculas';
-require '../lib/functions.php';
-//Require class files
-require '../lib/model/Actor.php';
-require '../lib/model/Pelicula.php';
-require '../lib/model/DataBase.php';
-//Create bd object from DataBase
-$bd = new DataBase();
-require '../lib/files/allowManagement.php';
-//Cookie management
-require '../lib/files/cookieSession.php';
-$lastVisit = isset($_COOKIE[hash('sha256',$id)]) ? htmlspecialchars($_COOKIE[hash('sha256',$id)]) : null;
-require '../lib/files/checkOptionUser.php';
-//Calling file to get code for loaf films
-require '../lib/files/loadFilms.php';
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -51,8 +31,7 @@ require '../lib/files/loadFilms.php';
                 <button  class="card__button w-100 card__button--insert p-2 text-dark fs-4" name="option" value="insert">
                     Insertar
                 </button>
-                <!--hidden input with object values array-->
-                <input type="hidden" name='objectIds' value='<?= base64_encode(serialize(array('id', 'titulo', 'genero', 'pais', 'anyo', 'cartel'))) ?>' > 
+                <input type="hidden" name='objectIds' value='<?= base64_encode(serialize(array('id', 'username', 'password', 'rol'))) ?>' > 
             </form>
             <?php
         }
@@ -80,33 +59,15 @@ require '../lib/files/loadFilms.php';
                                                                             class="nav__link nav__link--home">Home</a></li>
                         <li class="center_row nav__item nav__item--comma"><a href="./films.php"
                                                                              class="nav__link nav__link--comma">Films</a></li>
-                            <?php
-                            //Conditional to chek if user rol is 1
-                            if ($rol == 1) {
-                                ?>
-                            <li class="center_row nav__item nav__item--comma"><a href="./users.php"
-                                                                                 class="nav__link nav__link--comma">Users</a></li>
-                                <?php
-                            }
-                            ?>
-
+                        <li class="center_row nav__item nav__item--comma"><a href="./users.php"
+                                                                             class="nav__link nav__link--comma">Users</a></li>
                         <li class="center_row nav__item nav__item--comma"><a href="./seo.html"
                                                                              class="nav__link nav__link--comma">Seo</a></li>
                         <li class="center_row nav__item nav__item--last"><a href="#"
                                                                             class="nav__link nav__link--last">About</a></li>
                     </ul>
                 </nav>
-                <!-- social media container  -->
-                <!--                <div class="social-media social_media--absolute">
-                                    <a class="social-media__link" href="#" target="_blank">
-                                        <i class="nav__icon fa-brands fa-github"></i></a>
-                                    <a class="social-media__link" href="#" target="_blank">
-                                        <i class="nav__icon fa-brands fa-linkedin"></i></a>
-                                    <a class="social-media__link" href="#" target="_blank">
-                                        <i class="nav__icon fa-brands fa-facebook"></i></a>
-                                    <a class="social-media__link" href="#" target="_blank">
-                                        <i class="nav__icon fa-brands fa-instagram"></i></a>
-                                </div>-->
+
                 <?php
                 if (isset($sessionCookie)) {
                     ?>
@@ -131,16 +92,51 @@ require '../lib/files/loadFilms.php';
                 </div>
             </div>
             <main class="center_row flex-wrap p-4 main">
-                <?php
-                //Conditional to check if si set $films array to call for each
-                if (isset($films)) {
-                    //For each to iterate all films
-                    foreach ($films as $peli) {
-                        $peli->showAsCard($rol);
-                    }
-                }
-                ?>
-
+                <h2 class="text-light w-100 text-center mb-5">Send an email to contact us about any issue</h2>
+                <!--form to send mail-->
+                <form class="row g-3 needs-validation col-xl-8 offset-xl-2 border p-3" novalidate method="post" action="../lib/send.php">
+                    <!--username field-->
+                    <div class="col-xl-6">
+                        <label for="validationCustomUsername" class="form-label text-light">Username</label>
+                        <div class="input-group has-validation">
+                            <input type="text" class="form-control" name="username" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                            <div class="invalid-feedback">
+                                Please choose a username.
+                            </div>
+                        </div>
+                    </div>
+                    <!--mail title-->
+                    <div class="col-xl-6">
+                        <label for="validationCustom03" class="form-label text-light">Subject</label>
+                        <input type="text" class="form-control" name="subject" id="validationCustom03" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid city.
+                        </div>
+                    </div>
+                    <!--mail content-->
+                    <div class="col-xl-12">
+                        <label for="validationCustom04" class="form-label text-light">Content</label>
+                        <textarea type="text" class="form-control" name="content" id="validationCustom04" required></textarea>
+                        <div class="invalid-feedback">
+                            Please provide a valid city.
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                            <label class="form-check-label text-light" for="invalidCheck">
+                                Agree to terms and conditions
+                            </label>
+                            <div class="invalid-feedback">
+                                You must agree before submitting.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                    </div>
+                </form>
             </main>
 
             <!-- main final -->
@@ -212,3 +208,4 @@ require '../lib/files/loadFilms.php';
     </body>
 
 </html>
+

@@ -45,10 +45,10 @@ require './lib/functions.php';
                     <ul class="nav__list">
                         <li class="center_row nav__item nav__item--home"><a href="./index.html"
                                                                             class="nav__link nav__link--home">Home</a></li>
-                        <li class="center_row nav__item nav__item--comma"><a href="./pages/languajes.html"
+                        <li class="center_row nav__item nav__item--comma"><a href="./pages/films.php"
                                                                              class="nav__link nav__link--comma">Films</a></li>
-                        <li class="center_row nav__item nav__item--comma"><a href="#"
-                                                                             class="nav__link nav__link--comma">pruba1</a></li>
+                                                                             <li class="center_row nav__item nav__item--comma"><a href="./pages/contactUs.php"
+                                                                             class="nav__link nav__link--comma">Contact Us</a></li>
                         <li class="center_row nav__item nav__item--comma"><a href="#"
                                                                              class="nav__link nav__link--comma">prueba2</a></li>
                         <li class="center_row nav__item nav__item--last"><a href="#"
