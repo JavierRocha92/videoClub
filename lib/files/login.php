@@ -23,7 +23,6 @@ if (isset($_POST)) {
             //Start session an storage necesary values in session variables
             session_start();
             //Callign function to create a session variable and set user values in it
-//            setSessionVar($result[0]);
             $_SESSION['rol'] = $result[0]['rol'];
             $_SESSION['username'] = $result[0]['username'];
             $id = $result[0]['id'];
@@ -33,12 +32,12 @@ if (isset($_POST)) {
             //Redirecting user to private page
             header('Location:../../pages/films.php');
             exit;
-        } else {
+        } else {//Final result conditional (no match password and user)
             header('Location:../../index.php?login&error');
             exit;
         }
-    } else {
-        header('Location:../../index.php?login&error');
+    } else {//Final conditional when user does not exist in database
+        header('Location:../../index.php?register&error');
         exit;
     }
 }

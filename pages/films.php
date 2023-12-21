@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 //Set table name value
 $table = isset($_POST['table']) ? htmlspecialchars(($_POST['table'])) : 'peliculas';
 require '../lib/functions.php';
@@ -7,6 +8,9 @@ require '../lib/functions.php';
 require '../lib/model/Actor.php';
 require '../lib/model/Pelicula.php';
 require '../lib/model/DataBase.php';
+require '../lib/model/File.php';
+//create file object
+$file = new CustomFile('../lib/logs/logFile.csv','Username;Action;Date;Rol;Element;Element Id');
 //Create bd object from DataBase
 $bd = new DataBase();
 require '../lib/files/allowManagement.php';
@@ -90,23 +94,12 @@ require '../lib/files/loadFilms.php';
                             }
                             ?>
 
-                        <li class="center_row nav__item nav__item--comma"><a href="./seo.html"
-                                                                             class="nav__link nav__link--comma">Seo</a></li>
+                        <li class="center_row nav__item nav__item--comma"><a href="./contactUs.php"
+                                                                             class="nav__link nav__link--comma">Contact Us</a></li>
                         <li class="center_row nav__item nav__item--last"><a href="#"
                                                                             class="nav__link nav__link--last">About</a></li>
                     </ul>
                 </nav>
-                <!-- social media container  -->
-                <!--                <div class="social-media social_media--absolute">
-                                    <a class="social-media__link" href="#" target="_blank">
-                                        <i class="nav__icon fa-brands fa-github"></i></a>
-                                    <a class="social-media__link" href="#" target="_blank">
-                                        <i class="nav__icon fa-brands fa-linkedin"></i></a>
-                                    <a class="social-media__link" href="#" target="_blank">
-                                        <i class="nav__icon fa-brands fa-facebook"></i></a>
-                                    <a class="social-media__link" href="#" target="_blank">
-                                        <i class="nav__icon fa-brands fa-instagram"></i></a>
-                                </div>-->
                 <?php
                 if (isset($sessionCookie)) {
                     ?>

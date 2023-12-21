@@ -1,6 +1,6 @@
 <?php
-require '../functions.php';
-require './allowManagement.php';
+require_once '../functions.php';
+require_once './allowManagement.php';
 //Open session to connect
 session_start();
 //Destroy ccokie session_start() created

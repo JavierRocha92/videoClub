@@ -1,7 +1,15 @@
 <?php
+//Require for usign functions file
+session_start();
 require './lib/functions.php';
+$sessionActive = false;
+if (isset($_SESSION['username']) && isset($_SESSION['rol']) && isset($_SESSION['id'])) {
+    $id = htmlspecialchars($_SESSION['id']);
+    $rol = htmlspecialchars($_SESSION['rol']);
+    $username = htmlspecialchars($_SESSION['username']);
+    $sessionActive = true;
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -22,6 +30,7 @@ require './lib/functions.php';
         <link rel="stylesheet" href="./css/form.css">
         <link rel="stylesheet" href="./css/responsive.css">
         <link rel="stylesheet" href="./css/errors.css">
+        <link rel="stylesheet" href="./css/modal.css">
         <!-- FONT-AWESOME REMOTE LIBRARY -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
@@ -43,11 +52,11 @@ require './lib/functions.php';
                 </a>
                 <nav class="center_row nav" id="nav">
                     <ul class="nav__list">
-                        <li class="center_row nav__item nav__item--home"><a href="./index.html"
+                        <li class="center_row nav__item nav__item--home"><a href="./index.php"
                                                                             class="nav__link nav__link--home">Home</a></li>
                         <li class="center_row nav__item nav__item--comma"><a href="./pages/films.php"
                                                                              class="nav__link nav__link--comma">Films</a></li>
-                                                                             <li class="center_row nav__item nav__item--comma"><a href="./pages/contactUs.php"
+                        <li class="center_row nav__item nav__item--comma"><a href="./pages/contactUs.php"
                                                                              class="nav__link nav__link--comma">Contact Us</a></li>
                         <li class="center_row nav__item nav__item--comma"><a href="#"
                                                                              class="nav__link nav__link--comma">prueba2</a></li>
@@ -55,123 +64,149 @@ require './lib/functions.php';
                                                                             class="nav__link nav__link--last">About</a></li>
                     </ul>
                 </nav>
-                <!-- social media container  -->
-                <div class="social-media social_media--absolute">
-                    <a class="social-media__link" href="#" target="_blank">
-                        <i class="nav__icon nav__icon--social-media fa-brands fa-github"></i></a>
-                    <a class="social-media__link" href="#" target="_blank">
-                        <i class="nav__icon nav__icon--social-media fa-brands fa-linkedin"></i></a>
-                    <a class="social-media__link" href="#" target="_blank">
-                        <i class="nav__icon nav__icon--social-media fa-brands fa-facebook"></i></a>
-                    <a class="social-media__link" href="#" target="_blank">
-                        <i class="nav__icon nav__icon--social-media fa-brands fa-instagram"></i></a>
-                </div>
+                <?php
+                if (isset($sessionCookie)) {
+                    ?>
+                    <div class="d-flex container__user">
+                        <i class="fa-solid fa-user nav__icon nav__icon--session" id="session_icon"></i>
+                        <p class="nav__icon"><?= $username ?></p>
+                    </div>
+
+                    <div class="d-flex container__visit">
+                        <a class="bg-primary nav__button--visit" href="../lib/files/logOut.php">Log Out</a>
+                        <?php
+                        if (isset($lastVisit)) {
+                            ?>
+
+                            <p class="nav__icon">Last visit: <?= $lastVisit ?></p>
+
+                            <?php
+                        }//final lastvisit conditional
+                        ?>
+                    </div>
+                    <?php
+                }//Fianl sessionCookie conditional
+                ?>
+
             </div>
+
             <!-- main -->
             <main class="center_column main">
-                <!-- container for two form -->
-                <div class="container_forms" id="container__forms">
-                    <?php
-                    //Conditional to load login form
-                    if (isset($_GET['login'])) {
-                        ?>
+                <?php
+                //Conditional to cehck if a session is active to show or hide forms
+                if (!$sessionActive) {
+                    ?>
+                    <!-- container for two form -->
+                    <div class="container_forms" id="container__forms">
+                        <?php
+                        //Conditional to load sign up form
+                        if (isset($_GET['register'])) {
+                            ?>
+                            <!-- container for sign up form -->
+                            <div class="center_column container__form container__form--signup" id="signup">
+                                <!-- form title -->
+                                <div class="form__title_container">
+                                    <h2 class="form__title">Create an account
+                                    </h2>
+                                    <i class="fa-solid fa-circle-xmark icon"></i>
 
-                        <!-- container for log in form -->
-                        <div class="center_column container__form container__form--login" id="login">
-                            <!-- form title -->
-                            <div class="form__title_container">
-                                <h2 class="form__title">Type your account
-                                </h2>
-                                <i class="fa-solid fa-circle-xmark icon"></i>
-                            </div>
-                            <!-- contianer for accounts google and facebook -->
-                            <div class="center_column form__others_account">
-                                <div class="form__others_container">
-                                    <a class="form__icon" href="" target="_blank">
-                                        <i class="fa-brands fa-google form__icon--red"></i>
-                                        &nbsp;&nbsp;&nbsp;Log in with Google
-                                    </a>
                                 </div>
-                                <div class="form__others_container">
-                                    <a class="form__icon" href="" target="_blank">
-                                        <i class="fa-brands fa-facebook-f form__icon--blue"></i>
-                                        &nbsp;&nbsp;&nbsp;Log in with Facebook
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- form to enter your data -->
-                            <form action="./lib/files/login.php" method="post" class="center_column form form--login">
                                 <?php
+                                //Conditinal to check if error id is in $_GET variable
                                 if (isset($_GET['error'])) {
-                                    displayError('Usuario y/o contraseña incorrectos');
+                                    //Calling function to display a specific error
+                                    displayError('Debes de estar registrado para acceder');
                                 }
                                 ?>
-                                <input type="text" name="username" required class="form__input" placeholder="Type your username">
-                                <input type="password" name="password" required class="form__input" placeholder="Type your password">
-                                <div class="center_row checkbox">
-                                    <input type="checkbox" name="terms" class="form__input form__input--checkbox">
-                                    <label class="form__label" for="terms">Remember me</label>
+                                <!-- contianer for accounts google and facebook -->
+                                <div class="center_column form__others_account">
+                                    <div class="form__others_container">
+                                        <a class="form__icon" href="" target="_blank">
+                                            <i class="fa-brands fa-google form__icon--red"></i>
+                                            &nbsp;&nbsp;&nbsp;Sign up with Google
+                                        </a>
+                                    </div>
+                                    <div class="form__others_container">
+                                        <a class="form__icon" href="" target="_blank">
+                                            <i class="fa-brands fa-facebook-f form__icon--blue"></i>
+                                            &nbsp;&nbsp;&nbsp;Sign up with Facebook
+                                        </a>
+                                    </div>
                                 </div>
-                                <button class="form__input form__button" type="submit">Log in</button>
-                            </form>
-                            <!-- footer div for change form and password link support-->
-                            <div class="form__change">
-                                <a class="form__text--link">forget your password?</a>
-                                <a class="form__text" href="./index.php?signup" id="signup__button">Sign up</a>
+                                <!-- form to enter your data -->
+                                <form action="./lib/files/register.php" method="post" class="center_column form form--login">
+                                    <input type="text" required name="id" class="form__input--index" placeholder="Type your id">
+                                    <input type="text" required name="username" class="form__input--index" placeholder="Type your username">
+                                    <input type="password" required name="password" class="form__input--index" placeholder="Type your password">
+                                    <input type="number" required name="rol" class="form__input--index" placeholder="Type your rol">
+                                    <div class="center_row checkbox">
+                                        <input type="checkbox" name="terms" class="form__input --index form__input--checkbox">
+                                        <label class="form__label" for="terms">Accept terms about private policy</label>
+                                    </div>
+                                    <button class="form__input--index form__button--index" type="submit">Sing Up</button>
+                                </form>
+                                <!-- footer div for change form -->
+                                <div class="form__change">
+                                    <a class="form__text" href="./index.php?login" id="login__button">Log in</a>
+                                </div>
                             </div>
-                        </div>
-                        <?php
-                        //Condtional to load sign up form by default
-                    } else {
+                            <?php
+                            //Condtional to load sign up form
+                        } else {
+                            ?>
+                            <!-- container for login form -->
+                            <div class="center_column container__form container__form--login" id="login">
+                                <!-- form title -->
+                                <div class="form__title_container">
+                                    <h2 class="form__title">Type your account
+                                    </h2>
+                                    <i class="fa-solid fa-circle-xmark icon"></i>
+                                </div>
+                                <!-- contianer for accounts google and facebook -->
+                                <div class="center_column form__others_account">
+                                    <div class="form__others_container">
+                                        <a class="form__icon" href="" target="_blank">
+                                            <i class="fa-brands fa-google form__icon--red"></i>
+                                            &nbsp;&nbsp;&nbsp;Log in with Google
+                                        </a>
+                                    </div>
+                                    <div class="form__others_container">
+                                        <a class="form__icon" href="" target="_blank">
+                                            <i class="fa-brands fa-facebook-f form__icon--blue"></i>
+                                            &nbsp;&nbsp;&nbsp;Log in with Facebook
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- form to enter your data -->
+                                <form action="./lib/files/login.php" method="post" class="center_column form form--login">
+                                    <?php
+                                    //Conditinal to check if error id exists into $_GEt variable
+                                    if (isset($_GET['error'])) {
+                                        //Calling function to display a specific error
+                                        displayError('Usuario y/o contraseña incorrectos');
+                                    }
+                                    ?>
+                                    <input type="text" name="username" required class="form__input--index" placeholder="Type your username">
+                                    <input type="password" name="password" required class="form__input--index" placeholder="Type your password">
+                                    <div class="center_row checkbox">
+                                        <input type="checkbox" name="terms" class="form__input--index form__input--checkbox">
+                                        <label class="form__label" for="terms">Remember me</label>
+                                    </div>
+                                    <button class="form__input--index form__button--index" type="submit">Log in</button>
+                                </form>
+                                <!-- footer div for change form and password link support-->
+                                <div class="form__change">
+                                    <a class="form__text--link">forget your password?</a>
+                                    <a class="form__text" href="./index.php?register" id="signup__button">Sign up</a>
+                                </div>
+                            </div>
+                            <?php
+                        }
                         ?>
-                        <!-- container for sign up form -->
-                        <div class="center_column container__form container__form--signup" id="signup">
-                            <!-- form title -->
-                            <div class="form__title_container">
-                                <h2 class="form__title">Create an account
-                                </h2>
-                                <i class="fa-solid fa-circle-xmark icon"></i>
-                            </div>
-                            <!-- contianer for accounts google and facebook -->
-                            <div class="center_column form__others_account">
-                                <div class="form__others_container">
-                                    <a class="form__icon" href="" target="_blank">
-                                        <i class="fa-brands fa-google form__icon--red"></i>
-                                        &nbsp;&nbsp;&nbsp;Sign up with Google
-                                    </a>
-                                </div>
-                                <div class="form__others_container">
-                                    <a class="form__icon" href="" target="_blank">
-                                        <i class="fa-brands fa-facebook-f form__icon--blue"></i>
-                                        &nbsp;&nbsp;&nbsp;Sign up with Facebook
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- form to enter your data -->
-                            <form action="./lib/files/register.php" method="post" class="center_column form form--login">
-                                <input type="text" required name="id" class="form__input" placeholder="Type your id">
-                                <input type="text" required name="username" class="form__input" placeholder="Type your username">
-                                <input type="password" required name="password" class="form__input" placeholder="Type your password">
-                                <input type="number" required name="rol" class="form__input" placeholder="Type your rol">
-                                <div class="center_row checkbox">
-                                    <input type="checkbox" name="terms" class="form__input form__input--checkbox">
-                                    <label class="form__label" for="terms">Accept terms about private policy</label>
-                                </div>
-                                <button class="form__input form__button" type="submit">Sing Up</button>
-                            </form>
-                            <!-- footer div for change form -->
-                            <div class="form__change">
-                                <a class="form__text" href="./index.php?login" id="login__button">Log in</a>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                    ?>
-
-
-
-
-                </div>
+                    </div>
+                    <?php
+                }//Final conditional to show forms
+                ?>
                 <div class="visor">
                     <div class="visor__container-window">
                         <div class="visor__window"></div>
@@ -206,11 +241,11 @@ require './lib/functions.php';
                     <div class="visor__container-window">
                         <div class="visor__window visor__window--last"></div>
                         <div class="bar">
-                            <!-- animatin white bar -->
+                            <!-- animation white bar -->
                         </div>
                     </div>
                 </div>
-
+                <!--final of visor container-->
             </main>
             <!-- main final -->
             <!-- footer -->

@@ -1,50 +1,117 @@
 <?php
-
+/**
+ * Class to represent a usuario object builded by parameters such us id, username, password and rol
+ */
 class Usuario{
+    /**
+     * Id for any usuario
+     * 
+     * @var number
+     */
     private $id;
+    /**
+     * Username for any usuario
+     * 
+     * @var string
+     */
     private $username;
+    /**
+     * Password for any usuario
+     * 
+     * @var string
+     */
     private $password;
+    /**
+     * Rol for any usuario
+     * 
+     * @var number
+     */
     private $rol;
-    
+    /**
+     * Function to construct an usuario object by taking parameter as follow
+     * 
+     * @param number $id
+     * @param string $username
+     * @param string $password
+     * @param number $rol
+     */
     public function __construct($id,$username,$password,$rol){
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
         $this->rol = $rol;
     }
-    
+    /**
+     * Function to get id from a usuario object
+     * 
+     * @return number id from any usuario
+     */
     public function getId() {
         return $this->id;
     }
-
+    /**
+     * Function to get username from a usuario object
+     * 
+     * @return string username from any usuario
+     */
     public function getUsername() {
         return $this->username;
     }
-
+    /**
+     * Function to get password from a usuario object
+     * 
+     * @return string pasword from any usuario
+     */
     public function getPassword() {
         return $this->password;
     }
-
+    /**
+     * Function to get rol from a usuario object
+     * 
+     * @return number rol from any usuario
+     */
     public function getRol() {
         return $this->rol;
     }
-
+    /**
+     * Function to set id value for any user by taking value given as parameter
+     * 
+     * @param number $id value given as parameter
+     * @return number id from any usuario
+     */
     public function setId($id): void {
         $this->id = $id;
     }
-
+    /**
+     * Function to set username value for any user by taking value given as parameter
+     * 
+     * @param string $username value given as parameter
+     * @return string username from any usuario
+     */
     public function setUsername($username): void {
         $this->username = $username;
     }
-
+    /**
+     * Function to set password value for any user by taking value given as parameter
+     * 
+     * @param string $password value given as parameter
+     * @return string password from any usuario
+     */
     public function setPassword($password): void {
         $this->password = $password;
     }
-
+    /**
+     * Function to set rol value for any user by taking value given as parameter
+     * 
+     * @param number $rol value given as parameter
+     * @return number rol from any usuario
+     */
     public function setRol($rol): void {
         $this->rol = $rol;
     }
-    
+    /**
+     * Function to displat an usuario object information in a card format
+     */
     public function showAsCard(){
         ?>
         <!-- card container -->

@@ -6,6 +6,10 @@ require '../lib/functions.php';
 //Require class files
 require '../lib/model/Usuario.php';
 require '../lib/model/DataBase.php';
+require '../lib/model/File.php';
+
+//create file object
+$file = new CustomFile('../lib/logs/logFile.csv','Username;Action;Date;Rol;Element;Element Id');
 //Create bd object from DataBase
 $bd = new DataBase();
 require '../lib/files/allowManagement.php';
@@ -80,8 +84,8 @@ require '../lib/files/loadUsers.php';
                                                                              class="nav__link nav__link--comma">Films</a></li>
                         <li class="center_row nav__item nav__item--comma"><a href="./users.php"
                                                                              class="nav__link nav__link--comma">Users</a></li>
-                        <li class="center_row nav__item nav__item--comma"><a href="./seo.html"
-                                                                             class="nav__link nav__link--comma">Seo</a></li>
+                        <li class="center_row nav__item nav__item--comma"><a href="./contactUs.php"
+                                                                             class="nav__link nav__link--comma">Contact Us</a></li>
                         <li class="center_row nav__item nav__item--last"><a href="#"
                                                                             class="nav__link nav__link--last">About</a></li>
                     </ul>

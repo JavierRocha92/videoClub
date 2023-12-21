@@ -39,7 +39,7 @@ $objectAttributes = getArrayByObject($table, $object);
                     <?php
                     //Conditional to skip actores field
                     if (!is_array($value)) {
-                        createInput(getInputType($key), $key, $value, 'form__input', '', getMaxLeght($key));
+                        createInput(getInputType($key), $key, $value, 'form__input', '', getMaxLeght($value), getPattern($value));
                     }
                     ?>
                     <!--Close td tag for each input-->
@@ -51,7 +51,7 @@ $objectAttributes = getArrayByObject($table, $object);
             <td>
                 <!--Create hidden input to storage option into int-->
                 <?php
-                createInput('hidden', 'option', $option, '', '', '');
+                createInput('hidden', 'option', $option, '', '', '','');
                 ?>
                 <!--Close td tag for hidden input-->
             </td>
@@ -59,7 +59,7 @@ $objectAttributes = getArrayByObject($table, $object);
             <td>
                 <!--Create hidden input to storage option into int-->
                 <?php
-                createInput('hidden', 'object', base64_encode(serialize($object)), '', '', '');
+                createInput('hidden', 'object', base64_encode(serialize($object)), '', '', '','');
                 ?>
                 <!--Close td tag for hidden input-->
             </td>
@@ -67,7 +67,7 @@ $objectAttributes = getArrayByObject($table, $object);
             <td>
                 <!--Create hidden input to storage option into int-->
                 <?php
-                createInput('hidden', 'table', 'peliculas', '', '', '');
+                createInput('hidden', 'table', 'peliculas', '', '', '','');
                 ?>
                 <!--Close td tag for hidden input-->
             </td>
@@ -116,7 +116,7 @@ $objectAttributes = getArrayByObject($table, $object);
                         <!--Open td tag for ech attribute-->
                         <td>
                             <?php
-                            createInput(getInputType($key), $key, $value, 'form__input', '', getMaxLeght($key));
+                            createInput(getInputType($key), $key, $value, 'form__input', '', getMaxLeght($value),'');
                             ?>
                         </td>
                         <!--Close td tag for each attribute-->
@@ -128,7 +128,7 @@ $objectAttributes = getArrayByObject($table, $object);
                     <td>
                         <!--Create hidden input to storage option into int-->
                         <?php
-                        createInput('hidden', 'option', $option, '', '', '');
+                        createInput('hidden', 'option', $option, '', '', '','');
                         ?>
                         <!--Close td tag for hidden input-->
                     </td>
@@ -136,7 +136,7 @@ $objectAttributes = getArrayByObject($table, $object);
                     <td>
                         <!--Create hidden input to storage option into int-->
                         <?php
-                        createInput('hidden', 'object', base64_encode(serialize($actor)), '', '', '');
+                        createInput('hidden', 'object', base64_encode(serialize($actor)), '', '', '','');
                         ?>
                         <!--Close td tag for hidden input-->
                     </td>
@@ -144,7 +144,7 @@ $objectAttributes = getArrayByObject($table, $object);
                     <td>
                         <!--Create hidden input to storage table into int-->
                         <?php
-                        createInput('hidden', 'table', 'actores', '', '', '');
+                        createInput('hidden', 'table', 'actores', '', '', '','');
                         ?>
                         <!--Close td tag for hidden input-->
                     </td>

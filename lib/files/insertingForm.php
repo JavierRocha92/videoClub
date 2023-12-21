@@ -21,15 +21,6 @@ $_SESSION['option'] = 'insert';
             
             ?>
              </tr>
-<!--            <tr>
-                <th class="th text-light">Id</th>
-                <th class="th text-light">Título</th>
-                <th class="th text-light">Género</th>
-                <th class="th text-light">País</th>
-                <th class="th text-light">Año</th>
-                <th class="th text-light">Cartel</th>
-                <th>Actores</th>
-            </tr>-->
         </thead>
         <!--begin body table-->
         <tbody>
@@ -43,7 +34,7 @@ $_SESSION['option'] = 'insert';
                 <td>
                     <?php
                     //Conditional to skip actores field
-                    createInput(getInputType($value), $value, '', 'form__input', $value, getMaxLeght($key));
+                    createInput(getInputType($value), $value, '', 'form__input', $value, getMaxLeght($value), getPattern($value));
                     ?>
                     <!--Close td tag for each input-->
                 </td>
@@ -54,7 +45,7 @@ $_SESSION['option'] = 'insert';
             <td>
                 <!--Create hidden input to storage option into int-->
                 <?php
-                createInput('hidden', 'option', $option, '', '', '');
+                createInput('hidden', 'option', $option, '', '', '','');
                 ?>
                 <!--Close td tag for hidden input-->
             </td>

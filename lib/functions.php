@@ -7,13 +7,12 @@
  * 
  * @param array $values
  */
-function setSessionVar($values) {
-    $_SESSION['rol'] = $values['rol'];
-    $_SESSION['username'] = $values['username'];
-    $id = $values['id'];
-    $_SESSION['id'] = $id;
-}
-
+//function setSessionVar($values) {
+//    $_SESSION['rol'] = $values['rol'];
+//    $_SESSION['username'] = $values['username'];
+//    $id = $values['id'];
+//    $_SESSION['id'] = $id;
+//}
 //Final about cookies and sessions************************************************
 //********************************************************************************
 //Funtions about text process*****************************************************
@@ -37,7 +36,7 @@ function removeCharacter($string, $number) {
  */
 function displayError($content) {
     ?>
-    <p class='error'><?= $content ?></p>
+    <p class='error text-center'><?= $content ?></p>
     <?php
 }
 
@@ -83,7 +82,7 @@ function getMaxLeght($value) {
     if ($value == 'nombre' || $value == 'apellidos') {
         return 100;
     }
-    if ($value == 'fotografia' || $value == 'genero' || $value == 'cartel' || $value == 'password') {
+    if ($value == 'fotografia' || $value == 'genero' || $value == 'titulo' || $value == 'cartel' || $value == 'password') {
         return 255;
     }
     if ($value == 'id' || $value == 'anyo') {
@@ -115,15 +114,53 @@ function getInputType($value) {
     }
 }
 
-function createInput($type, $name, $value, $class, $placeholder, $maxLenght) {
+function getPattern($value) {
+    if ($value == 'id' || $value == 'anyo') {
+        return '[0-9]{1,11}';
+    }
+    if ($value == 'rol') {
+        return '[0-9]{1,4}';
+    }
+}
+
+/**
+ * Functionto create infput html element b taking values given as parameters
+ * 
+ * @param string $type
+ * @param string $name
+ * @param string $value
+ * @param string $class
+ * @param string $placeholder
+ * @param number $maxLenght
+ */
+function createInput($type, $name, $value, $class, $placeholder, $maxLenght, $pattern) {
     ?>
-    <input class="<?= $class ?>" type="<?= $type ?>" name='<?= $name ?>' value='<?= $value ?>' required placeholder='<?= $placeholder ?>' maxlength="<?= $maxLenght ?>">
+    <input class="<?= $class ?>" type="<?= $type ?>" name='<?= $name ?>' value='<?= $value ?>' required
+           placeholder='<?= $placeholder ?>' 
+           maxlength="<?= $maxLenght ?>" 
+           <?php
+           if ($pattern != '') {
+               ?>
+               pattern="<?= $pattern ?>"
+               <?php
+           }
+           ?>
+               >
     <?php
 }
 
 //Functions about action user management********************************************************************************************************************************
 //*********************************************************************************************************************************************************************
-
+/**
+ * Function to handle delete user action by calling other function and requires such us cinfirmationOption for confirma action to make
+ * 
+ * @param array $postValues values  from post
+ * @param Pelicula/Actor $object Pleicula or Actor object
+ * @param Database $bd Database object
+ * @param string $response response from user about to make action or not
+ * @param string $option option user was taken about modify database elemnet (delete,update,insert or confirm)
+ * @param string $table reference table to make statement
+ */
 function handleDeleteAction($postValues, $object, $bd, $response, $option, $table) {
     //Conditional to check if response variable is set
     if (isAfrimativeResponse($response)) {
@@ -139,23 +176,46 @@ function handleDeleteAction($postValues, $object, $bd, $response, $option, $tabl
     }
 }
 
+/**
+ * Function to handle update user action by calling other functions and requires such us updatingForm to type new values for a object
+ * 
+ * @param type $actionUser storage action user for callign the next function handleConfirmAction() to get the difference between update, insert or delete
+ * @param Pelicula/Actor $object Pleicula or Actor object
+ * @param string $option option user was taken about modify database elemnet (delete,update,insert or confirm)
+ * @param string $table reference table to make statement
+ */
 function handleUpdateAction($actionUser, $object, $option, $table) {
     //Calling file to show update form for any film
     require '../lib/files/updatingForm.php';
 }
 
+/**
+ * Function to handle insert user actio by callign other function and requires such us insertingForm.php for insert values for a new ibject to insert into database
+ * 
+ * @param type $actionUser storage action user for callign the next function handleConfirmAction() to get the difference between update, insert or delete
+ * @param string $option option user was taken about modify database elemnet (delete,update,insert or confirm)
+ * @param array $objectIds contains id for a Pelicula or Actor object to use them as palceholder to build a insetion form
+ * @param string $table reference table to make statement
+ */
 function handleInsertAction($actionUser, $option, $objectIds, $table) {
     //Calling file to show insert form for any film
     require '../lib/files/insertingForm.php';
 }
 
+/**
+ * Function to handle confirmation action from user from cofirmationForm.php
+ * @param array $postValues values  from post
+ * @param type $actionUser storage action user for callign the next function handleConfirmAction() to get the difference between update, insert or delete
+ * @param string $response response from user about to make action or not
+ * @param Pelicula/Actor $object Pleicula or Actor object
+ * @param string $option option user was taken about modify database element (delete,update,insert or confirm)
+ * @param Database $bd Database object
+ * @param string $table reference table to make statement
+ */
 function handleConfirmAction($postValues, $actionUser, $response, $object, $option, $bd, $table) {
-//    var_dump($object);
-//    exit;
     if (isset($response)) {
         if ($response === 'yes') {
             $object_attributes = getObjectsAttributes($_SESSION['objectOnAction'], $table);
-//            DENTRO DE ESTE CONDICIONAL SE DEBE IMPLENTAR UN METODO QUE NOS EXTRAIGA DEL ARRYA POST SOLO LOS VALORES NECESARIOS QUE OCINCIDAN CON EL OBJETO  PARA HACER LA CONULTA
             //Conditional to check id session ooption variable is for updating
             if ($actionUser == 'update') {
                 //Create update statement by calling function
@@ -165,32 +225,36 @@ function handleConfirmAction($postValues, $actionUser, $response, $object, $opti
             }
             if ($actionUser == 'insert') {
                 //Create insert statement by calling function
-                $sql = $bd->getInsertQuery($object_attributes, $table);
+                $sql = $bd->getInsertQuery($object_attributes, substr($table, 0,-1));
                 //Set keywords values
                 $keyWords = null;
             }
-//            echo 'esta es la consulta<br>';
-//            echo $sql.'<br>';
-//            echo 'este es el id <br>';
-//            echo $id.'<br>';
-//            exit;
             //Create a conecction to database
             $bd->connection();
             //Make statement by cllign this function
             $bd->makeStatement($bd->getConnection(), $sql, $keyWords);
             //Close DB connection
             $bd->disconnect();
+            //callign Function to write information into log file
+            writeInformation($actionUser,$object_attributes['id'],$table);
+            
         } else {//Conditinal when response is not yes, is not
             header('Location: ./films.php');
         }
     } else {//Condtional when reposne does not exist
-        //Stprage into seesion variable values from updating form
+        //Storage into seesion variable values from updating form
         $_SESSION['objectOnAction'] = $postValues;
         //Calling require document to confirm modification
         require '../lib/files/confirmationOptionForm.php';
     }
 }
 
+/**
+ * Function to detrminate if a variable given as parameter exists and contains 'yes' value  into t
+ * 
+ * @param string $response
+ * @return bool true if response var exists and it is true or false it is not
+ */
 function isAfrimativeResponse($response) {
     if (isset($response) && $response === 'yes') {
         return true;
@@ -199,6 +263,13 @@ function isAfrimativeResponse($response) {
     }
 }
 
+/**
+ * Function to rreturn an object become to asociative array depending of table parameter evaluation 
+ * 
+ * @param string $table reference table
+ * @param Pelicula/Actor $object 
+ * @return array asciative values from a object given as parameter
+ */
 function getArrayByObject($table, $object) {
     switch ($table) {
         case 'peliculas':
@@ -221,6 +292,12 @@ function getArrayByObject($table, $object) {
     }
 }
 
+/**
+ * Function to return a specific file patha depending of table var evaluation
+ * 
+ * @param string $table
+ * @return string path for a specific file 
+ */
 function getPathByTable($table) {
     switch ($table) {
         case 'peliculas':
@@ -230,6 +307,13 @@ function getPathByTable($table) {
     }
 }
 
+/**
+ * Function to get an array with id and values as Pelicula or Actor object by taking values from post array given as parameter
+ * 
+ * @param array $object
+ * @param string $table
+ * @return array asociative array with values and id like Pleicula or Actor object
+ */
 function getObjectsAttributes($object, $table) {
     switch ($table) {
         case 'peliculas':
@@ -269,8 +353,6 @@ function idUserExists($bd, $username) {
     $bd->connection();
     //Create a select statement
     $sql = $bd->getSelectQuery(array('*'), 'usuarios', array('username'));
-//    echo $sql;
-//    exit;
     //get result form  statement
     $result = $bd->makeStatement($bd->getConnection(), $sql, array($username));
     $bd->disconnect();
@@ -279,3 +361,13 @@ function idUserExists($bd, $username) {
 
 //Final about checking into databse********************************************************************************************************************************
 //*****************************************************************************************************************************************************************
+
+function writeInformation($action,$elementId,$element) {
+    require $_SERVER['DOCUMENT_ROOT'] . '/videoClub_app/lib/files/allowManagement.php';
+    $currentTime = date('d-m-Y H.I.s');
+    $content = "\n$username;$action;$currentTime;$rol;$element;$elementId";
+    //Create customIFle object
+    $file = new CustomFile($_SERVER['DOCUMENT_ROOT'].'/VideoClub_app/lib/logs/logFile.csv');
+    //calling function to write information
+    $file->writeFile($content, 'a');
+}

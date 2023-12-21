@@ -1,21 +1,41 @@
 <?php
-
+/**
+ * Class to represent a database object with only connection parameter
+ */
 class Database {
 
+    /**
+     * 
+     * @var PDO oject to generate a database conecction
+     */
     private $connection;
-
-    public function getConnection() {
-        return $this->connection;
-    }
-
-    public function setConnection($connection): void {
-        $this->connection = $connection;
-    }
-
+    
+    /**
+     * Function to construct a database object
+     */
     public function __construct() {
         
     }
-
+    /**
+     * Fucntion to get connection from a database
+     * 
+     * @return PDO connection from a database
+     */
+    public function getConnection() {
+        return $this->connection;
+    }
+    /**
+     * Function to set connection value passed as parameters for any database
+     * 
+     * @param PDO $connection
+     * @return PDO database from actor 
+     */
+    public function setConnection($connection): void {
+        $this->connection = $connection;
+    }
+    /**
+     * Funtion to set a PDO object as connection for any database by using the same string connection
+     */
     public function connection() {
         try {
             $this->connection = new PDO('mysql:dbname=videoclub;host=127.0.0.1', 'root', '');
@@ -24,14 +44,22 @@ class Database {
             displayError('La aplicaciónn esta en labores de matenimiento');
         }
     }
-
+    /**
+     * Funtion to set null value to connection database parameter
+     */
     public function disconnect() {
         $this->connection = null;
     }
 
+    /**
+     * Funtion to create a insert query builded by taking values given as parameter
+     * 
+     * @param Array $values contians values to bluid a insert query
+     * @param string $table table to reference
+     * @return string sql sintax insert
+     */
     public function getInsertQuery($values, $table) {
         //Slice the last value 
-//        $values = array_slice($values, 0, -1);
         $sql = "INSERT INTO $table (";
         //For each to write fields for any statemente as key
         foreach ($values as $key => $value) {
@@ -55,11 +83,16 @@ class Database {
         //Remove two last characters
         $sql = removeCharacter($sql, -2);
         $sql .= ');';
-        echo $sql;
-        exit;
         return $sql;
     }
-
+    /**
+     * Funtion to create a select query builded by taking values given as parameter
+     * 
+     * @param Array $values contians values to bluid a select query
+     * @param string $table table to reference
+     * @param Array $keyWords contains values to construct conditionals for searching 
+     * @return string sql sintax select
+     */
     public function getSelectQuery($values, $table, $keyWords = false) {
         $sql = 'SELECT ';
         foreach ($values as $value) {//For each to bulid fileds 
@@ -81,10 +114,15 @@ class Database {
 
         return $sql;
     }
-
+    /**
+     * Function to make a statement on database by taking different values given as parameter
+     * 
+     * @param PDO $bd PDO object
+     * @param string $sql sintax sql statement string
+     * @param Array $keyValues contains key values to build prepare statement
+     * @return PDO/bool PDO object if result has value or false it does not
+     */
     public function makeStatement($bd, $sql, $keyValues = null) {
-//        echo $sql;
-//        exit;
         try {
             $result = $bd->prepare($sql);
             if (isset($keyValues)) {
@@ -102,9 +140,15 @@ class Database {
             return false;
         }
     }
-
+    /**
+     * Funtion to create a update query builded by taking values given as parameter
+     * 
+     * @param Array $values contians values to bluid a update query
+     * @param string $table table to reference
+     * @param Array $keyWords contains values to construct conditionals for seraching specific items 
+     * @return string sql sintax update
+     */
     public function getUpdateQuery($values, $table, $keyWords) {
-//        $values = array_slice($values, 0, -2);
         $sql = "UPDATE $table SET ";
         //Conditional to check if values variable is an array
         if (is_array($values)) {
@@ -131,7 +175,13 @@ class Database {
         $sql .= ';';
         return $sql;
     }
-
+    /**
+     * Funtion to create a delete query builded by taking values given as parameter
+     * 
+     * @param string $table table to reference
+     * @param Array $keyWords contains values to construct conditionals for seraching specific items 
+     * @return string sql sintax delete
+     */
     public function getDeleteQuery($table, $keyWords = false) {
         $sql = "DELETE FROM $table WHERE ";
         foreach ($keyWords as $keyWord) {
@@ -141,7 +191,13 @@ class Database {
         $sql .= ";";
         return $sql;
     }
-
+    /**
+     * Function to join tow string as query and subquery to create a sql sintax subquery
+     * 
+     * @param string $sql father query
+     * @param string $subsql nest query or subquery
+     * @return  string sql sintax subquery
+     */
     public function getSubQuery($sql, $subsql) {
         //Calling function to remove final characters
         $sql = removeCharacter($sql, -1);

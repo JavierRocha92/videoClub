@@ -1,5 +1,9 @@
-<h1>estas en el send.php</h1>
+
 <?php
+require '../lib/files/allowManagement.php';
+//Cookie management
+require '../lib/files/cookieSession.php';
+$lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
 
 //Adding needing libraries
 use PHPMailer\PHPMailer\PHPMailer;
@@ -36,7 +40,7 @@ if (isset($_POST['username']) && isset($_POST['subject']) && isset($_POST['conte
     //Origin mail email
     $email->setFrom('j1992prueba1992@gmail.com');
     //Destiny email send
-    $email->addAddress('');//Indica aqui una direccion de correo electronico donde quieras recibir los emails d onfirmacion
+    $email->addAddress('j1992prueba1992@gmail.com');
     //Content type
     $email->isHTML(true);
     //set email subject

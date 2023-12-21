@@ -46,9 +46,9 @@ body{
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas: "header"
-                         "nav_container"
-                         "main"
-                         "footer";
+        "nav_container"
+        "main"
+        "footer";
 }
 
 .main{
@@ -83,7 +83,7 @@ body{
         opacity: 1;
         transform: translateY(0);
     }
-    
+
 }
 .visor__container-window{
     overflow: hidden;
@@ -143,7 +143,7 @@ body{
     to{
         transform: translate(0);
     }
-    
+
 }
 
 .third::before,.fourth::before,.fiveth::before{
@@ -167,7 +167,7 @@ body{
 .third::before{
     content: 'THE';
     animation-delay: 3.5s;
-    background-color: transparent; 
+    background-color: transparent;
     color: white;
     font-family: encode;
 }
@@ -190,7 +190,7 @@ body{
     to{
         transform: translate(100%);
     }
-    
+
 }
 /* main content styles */
 .cards{
@@ -199,10 +199,3 @@ body{
     margin-top: 20px;
     padding: 10px;
 }
-/*modal styles*/
-/*.modal{
-    z-index: 200!important;
-}
-.modal-dialog{
-    z-index: 201!important
-}*/

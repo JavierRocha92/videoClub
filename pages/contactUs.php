@@ -1,3 +1,12 @@
+<?php
+session_start();
+require_once '../lib/functions.php';
+require '../lib/files/allowManagement.php';
+//Cookie management
+require '../lib/files/cookieSession.php';
+$lastVisit = isset($_COOKIE[getSessionCookieName('', $id)]) ? $_COOKIE[getSessionCookieName('', $id)] : null;
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
