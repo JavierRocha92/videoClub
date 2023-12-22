@@ -1,6 +1,9 @@
 <?php
 require '../functions.php';
 require '../model/DataBase.php';
+require '../model/File.php';
+//create file object to save info about user actions
+$file = new CustomFile('../lib/logs/logFile.csv','Username;Action;Date;Rol;Element;Element Id');
 //Create database object
 $bd = new Database();
 //Calling function to verify post massage exist and filter it
@@ -29,6 +32,8 @@ if (isset($_POST)) {
             $_SESSION['id'] = $id;
             //Cookie session creation
             setcookie(getSessionCookieName(session_id(), $id), 'sessionActive', time() + 1 * 600, '/');
+            //Write info into log file about star session user
+            writeInformation('session start', '-', '-');
             //Redirecting user to private page
             header('Location:../../pages/films.php');
             exit;

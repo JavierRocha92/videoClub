@@ -9,8 +9,6 @@ require '../lib/model/Actor.php';
 require '../lib/model/Pelicula.php';
 require '../lib/model/DataBase.php';
 require '../lib/model/File.php';
-//create file object
-$file = new CustomFile('../lib/logs/logFile.csv','Username;Action;Date;Rol;Element;Element Id');
 //Create bd object from DataBase
 $bd = new DataBase();
 require '../lib/files/allowManagement.php';

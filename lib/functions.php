@@ -145,7 +145,7 @@ function createInput($type, $name, $value, $class, $placeholder, $maxLenght, $pa
                <?php
            }
            ?>
-               >
+           >
     <?php
 }
 
@@ -170,6 +170,8 @@ function handleDeleteAction($postValues, $object, $bd, $response, $option, $tabl
         $bd->makeStatement($bd->getConnection(), $sql, array($object->getId()));
         //Close DB connection
         $bd->disconnect();
+        //callign Function to write information into log file
+            writeInformation('delete', $object->getId(), substr($table, 0, -1));
     } else {
         //Calling require document to confirm modification
         require '../lib/files/confirmationOptionForm.php';
@@ -225,7 +227,7 @@ function handleConfirmAction($postValues, $actionUser, $response, $object, $opti
             }
             if ($actionUser == 'insert') {
                 //Create insert statement by calling function
-                $sql = $bd->getInsertQuery($object_attributes, substr($table, 0,-1));
+                $sql = $bd->getInsertQuery($object_attributes, $table);
                 //Set keywords values
                 $keyWords = null;
             }
@@ -236,8 +238,7 @@ function handleConfirmAction($postValues, $actionUser, $response, $object, $opti
             //Close DB connection
             $bd->disconnect();
             //callign Function to write information into log file
-            writeInformation($actionUser,$object_attributes['id'],$table);
-            
+            writeInformation($actionUser, $object_attributes['id'], substr($table, 0,-1));
         } else {//Conditinal when response is not yes, is not
             header('Location: ./films.php');
         }
@@ -362,12 +363,15 @@ function idUserExists($bd, $username) {
 //Final about checking into databse********************************************************************************************************************************
 //*****************************************************************************************************************************************************************
 
-function writeInformation($action,$elementId,$element) {
-    require $_SERVER['DOCUMENT_ROOT'] . '/videoClub_app/lib/files/allowManagement.php';
-    $currentTime = date('d-m-Y H.I.s');
+function writeInformation($action, $elementId, $element) {
+    require_once $_SERVER['DOCUMENT_ROOT'].'/VideoClub_app/lib/model/File.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/VideoClub_app/lib/files/allowManagement.php';
+    $currentTime = date("d-m-Y H:i:s");
     $content = "\n$username;$action;$currentTime;$rol;$element;$elementId";
+//    echo $content;
+//    exit;
     //Create customIFle object
-    $file = new CustomFile($_SERVER['DOCUMENT_ROOT'].'/VideoClub_app/lib/logs/logFile.csv');
+    $file = new CustomFile($_SERVER['DOCUMENT_ROOT'] . '/VideoClub_app/lib/logs/logFile.csv');
     //calling function to write information
     $file->writeFile($content, 'a');
 }

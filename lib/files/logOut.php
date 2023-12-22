@@ -10,4 +10,6 @@ session_destroy();
 //update info to lastVisti cookie
 setcookie(hash('sha256',$id),date("d-m-Y H:i"),time() + 24 * 3600,'/');
 //Redirecting to index
+//Callign function to write ifnfo into log file about los¡g out
+writeInformation('log out', '-', '-');
 header('Location: ../../index.php');

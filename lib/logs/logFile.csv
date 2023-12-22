@@ -1,2 +1,4 @@
-Username;Action;Date;Rol;Element;Element Id
-tania;update;21-12-2023 20.0.43;1;peliculas;1
+
+tania;session start;22-12-2023 11:54:55;1;-;-
+tania;delete;22-12-2023 11:55:06;1;usuario;222
+tania;insert;22-12-2023 11:55:42;1;usuario;22
