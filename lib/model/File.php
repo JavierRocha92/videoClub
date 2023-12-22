@@ -1,10 +1,24 @@
 <?php
-
+/**
+ * class to represent file object built by attributes such us path and header
+ */
 class CustomFile {
-
+    /**
+     * 
+     * @var string specific path for a file in the proyect directory
+     */
     public $path;
+    /**
+     * 
+     * @var string header to write a head to file
+     */
     public $header;
-
+    /**
+     * Function to create a new file by taking parameters such us path and header, by calling other function to exception manage
+     * 
+     * @param string $path specific path of object file in poyect directory
+     * @param string $header head to write into created file
+     */
     public function __construct($path, $header = '') {
         $this->path = $path;
         $this->header = $header;
@@ -19,19 +33,35 @@ class CustomFile {
             }
         }
     }
-
+    /**
+     * Function to get object file path
+     * 
+     * @return string file path
+     */
     public function getPath() {
         return $this->path;
     }
-
+    /**
+     * Function to get object file header
+     * 
+     * @return string file header
+     */
     public function setPath($path): void {
         $this->path = $path;
     }
-
+    /**
+     * Funciont to set path value into file object
+     * 
+     * @return string
+     */
     public function getHeader() {
         return $this->header;
     }
-
+    /**
+     * Funciont to set header value into file object
+     * 
+     * @return string
+     */
     public function setHeader($header): void {
         $this->header = $header;
     }

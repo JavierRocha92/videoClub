@@ -349,7 +349,7 @@ function getObjectsAttributes($object, $table) {
  * @param string $id key value for user who will be serached in database
  * @return PDO 
  */
-function idUserExists($bd, $username) {
+function isUserExists($bd, $username) {
     //Create a databse connection 
     $bd->connection();
     //Create a select statement
@@ -368,8 +368,6 @@ function writeInformation($action, $elementId, $element) {
     require $_SERVER['DOCUMENT_ROOT'] . '/VideoClub_app/lib/files/allowManagement.php';
     $currentTime = date("d-m-Y H:i:s");
     $content = "\n$username;$action;$currentTime;$rol;$element;$elementId";
-//    echo $content;
-//    exit;
     //Create customIFle object
     $file = new CustomFile($_SERVER['DOCUMENT_ROOT'] . '/VideoClub_app/lib/logs/logFile.csv');
     //calling function to write information

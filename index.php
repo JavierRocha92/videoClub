@@ -186,6 +186,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['rol']) && isset($_SESSION['
                                         displayError('Usuario y/o contraseña incorrectos');
                                     }
                                     ?>
+                                    <?php
+                                    //Conditinal to check if error id exists into $_GEt variable
+                                    if (isset($_GET['errorUser'])) {
+                                        //Calling function to display a specific error
+                                        displayError('Ya estas registrado, prueba a iniciar sesion');
+                                    }
+                                    ?>
                                     <input type="text" name="username" required class="form__input--index" placeholder="Type your username">
                                     <input type="password" name="password" required class="form__input--index" placeholder="Type your password">
                                     <div class="center_row checkbox">

@@ -14,7 +14,11 @@ $bd = new DataBase();
 require '../lib/files/allowManagement.php';
 //Cookie management
 require '../lib/files/cookieSession.php';
+//$lastVisit = isset($_COOKIE[hash('sha256',$id)]) ? $_COOKIE[hash('sha256',$id)] : null;
+
 $lastVisit = isset($_COOKIE[hash('sha256',$id)]) ? htmlspecialchars($_COOKIE[hash('sha256',$id)]) : null;
+//echo hash('sha256',$id);
+//exit;
 require '../lib/files/checkOptionUser.php';
 //Calling file to get code for loaf films
 require '../lib/files/loadFilms.php';
@@ -114,7 +118,7 @@ require '../lib/files/loadFilms.php';
                     if (isset($lastVisit)) {
                         ?>
 
-                        <p class="nav__icon">Last visit: <?= $lastVisit ?></p>
+                        <p class="nav__icon fs-6 mt-2 text-center">Last visit: <?= $lastVisit ?></p>
 
                         <?php
                     }

@@ -114,7 +114,7 @@ require '../lib/files/loadUsers.php';
                     if (isset($lastVisit)) {
                         ?>
 
-                        <p class="nav__icon">Last visit: <?= $lastVisit ?></p>
+                        <p class="nav__icon fs-6 mt-2 text-center">Last visit: <?= $lastVisit ?></p>
 
                         <?php
                     }

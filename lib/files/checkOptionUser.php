@@ -1,8 +1,6 @@
 <?php
 //Conditional to check if user pushed any button to modifiy any film
 if (isset($_POST['option']) || isset($_POST['response'])) {
-//    var_dump($_POST);
-//    exit;
     $postValues = filter_input_array(INPUT_POST);
     $objectIds = isset($postValues['objectIds']) ? unserialize(base64_decode($postValues['objectIds'])) : null;
     $actionUser = isset($_SESSION['option']) ? htmlspecialchars($_SESSION['option']) : null;
