@@ -23,3 +23,18 @@ tania;session start;22-12-2023 12:53:03;1;-;-
 tania;session start;22-12-2023 12:53:51;1;-;-
 tania;log out;22-12-2023 12:53:53;1;-;-
 tania;session start;22-12-2023 12:53:59;1;-;-
+tania;session start;26-12-2023 11:43:07;1;-;-
+tania;log out;26-12-2023 11:46:05;1;-;-
+tania;session start;26-12-2023 11:55:44;1;-;-
+tania;log out;26-12-2023 11:58:11;1;-;-
+tania;session start;26-12-2023 12:02:16;1;-;-
+tania;insert;26-12-2023 12:02:47;1;pelicula;7
+tania;update;26-12-2023 12:03:02;1;pelicula;7
+tania;delete;26-12-2023 12:03:41;1;pelicula;7
+tania;update;26-12-2023 12:03:58;1;actore;2
+tania;update;26-12-2023 12:04:13;1;actore;2
+tania;update;26-12-2023 12:04:23;1;actore;10
+tania;update;26-12-2023 12:04:37;1;actore;10
+tania;insert;26-12-2023 12:08:35;1;pelicula;6
+tania;session start;26-12-2023 12:28:50;1;-;-
+tania;insert;26-12-2023 12:52:50;1;actore;44

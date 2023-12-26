@@ -9,6 +9,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['rol']) && isset($_SESSION['
     $username = htmlspecialchars($_SESSION['username']);
     $sessionActive = true;
 }
+//Conditional to check any connection error
+if (isset($_GET['id'])) {
+    $errorId = htmlspecialchars($_GET['id']);
+    //Contitional to check id error vale from get
+    if ($errorId == 001) {
+        require $_SERVER['DOCUMENT_ROOT'].'/VideoClub_app/lib/files/displayError.php';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

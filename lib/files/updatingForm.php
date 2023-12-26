@@ -51,7 +51,7 @@ $objectAttributes = getArrayByObject($table, $object);
             <td>
                 <!--Create hidden input to storage option into int-->
                 <?php
-                createInput('hidden', 'option', $option, '', '', '','');
+                createInput('hidden', 'option', $option, '', '', '', '');
                 ?>
                 <!--Close td tag for hidden input-->
             </td>
@@ -59,7 +59,7 @@ $objectAttributes = getArrayByObject($table, $object);
             <td>
                 <!--Create hidden input to storage option into int-->
                 <?php
-                createInput('hidden', 'object', base64_encode(serialize($object)), '', '', '','');
+                createInput('hidden', 'object', base64_encode(serialize($object)), '', '', '', '');
                 ?>
                 <!--Close td tag for hidden input-->
             </td>
@@ -67,7 +67,7 @@ $objectAttributes = getArrayByObject($table, $object);
             <td>
                 <!--Create hidden input to storage option into int-->
                 <?php
-                createInput('hidden', 'table', 'peliculas', '', '', '','');
+                createInput('hidden', 'table', 'peliculas', '', '', '', '');
                 ?>
                 <!--Close td tag for hidden input-->
             </td>
@@ -82,28 +82,30 @@ $objectAttributes = getArrayByObject($table, $object);
         </tbody>
         <!--final table-->
     </table>
-    <!--Actor table title-->
-    <h2 class="modal__title text-light">Actores</h2>
-    <!--create table and form for actors-->
-    <!--opne tag table for actors-->
-    <table>
-        <!--table header-->-->
-        <thead>
-            <tr>
-                <th class="th text-light">Id</th>
-                <th class="th text-light">Nombre</th>
-                <th class="th text-light">Apellidos</th>
-                <th class="th text-light">Fotografía</th>
-            </tr>
-        </thead>
-        <!--Final header table-->
-        <!--Oopen body table-->
-        <tbody>
-            <?php
-            //Conditinal to check if actor values exists
-            if (isset($objectAttributes['actores'])) {
+    <?php
+    //Conditinal to check if actor values exists
+    if (isset($objectAttributes['actores'])) {
 //                Open tr tag for attributes
+        ?>
+        <!--Actor table title-->
+        <h2 class="modal__title text-light">Actores</h2>
+        <!--create table and form for actors-->
+        <!--opne tag table for actors-->
+        <table>
+            <!--table header-->-->
+            <thead>
+                <tr>
+                    <th class="th text-light">Id</th>
+                    <th class="th text-light">Nombre</th>
+                    <th class="th text-light">Apellidos</th>
+                    <th class="th text-light">Fotografía</th>
+                </tr>
+            </thead>
+            <!--Final header table-->
+            <!--Oopen body table-->
+            <tbody>
 
+                <?php
                 foreach ($objectAttributes['actores'] as $actor) {
                     ?>
                     <!--Open tr tag-->
@@ -116,7 +118,7 @@ $objectAttributes = getArrayByObject($table, $object);
                         <!--Open td tag for ech attribute-->
                         <td>
                             <?php
-                            createInput(getInputType($key), $key, $value, 'form__input', '', getMaxLeght($value),'');
+                            createInput(getInputType($key), $key, $value, 'form__input', '', getMaxLeght($value), '');
                             ?>
                         </td>
                         <!--Close td tag for each attribute-->
@@ -128,7 +130,7 @@ $objectAttributes = getArrayByObject($table, $object);
                     <td>
                         <!--Create hidden input to storage option into int-->
                         <?php
-                        createInput('hidden', 'option', $option, '', '', '','');
+                        createInput('hidden', 'option', $option, '', '', '', '');
                         ?>
                         <!--Close td tag for hidden input-->
                     </td>
@@ -136,7 +138,7 @@ $objectAttributes = getArrayByObject($table, $object);
                     <td>
                         <!--Create hidden input to storage option into int-->
                         <?php
-                        createInput('hidden', 'object', base64_encode(serialize($actor)), '', '', '','');
+                        createInput('hidden', 'object', base64_encode(serialize($actor)), '', '', '', '');
                         ?>
                         <!--Close td tag for hidden input-->
                     </td>
@@ -144,7 +146,7 @@ $objectAttributes = getArrayByObject($table, $object);
                     <td>
                         <!--Create hidden input to storage table into int-->
                         <?php
-                        createInput('hidden', 'table', 'actores', '', '', '','');
+                        createInput('hidden', 'table', 'actores', '', '', '', '');
                         ?>
                         <!--Close td tag for hidden input-->
                     </td>
@@ -159,13 +161,14 @@ $objectAttributes = getArrayByObject($table, $object);
                 <!--Close tr tag--> 
                 <?php
             }//End father for each
-        }//End of array conditional
-        ?>
-        <!--Close tbody-->
-        </tbody>
-        <!--Close table actors tag-->
-    </table>
-
+            ?>
+            <!--Close tbody-->
+            </tbody>
+            <!--Close table actors tag-->
+        </table>
+        <?php
+    }//End of array conditional
+    ?>
     <!--button to get out-->
     <a class="text-decoration-none bg-primary text-light fs-3 p-2 pe-5 ps-5 form__link" href="<?= getPathByTable($table) ?>">Salir</a>
 </div>

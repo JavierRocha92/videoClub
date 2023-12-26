@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class to represent a database object with only connection parameter
  */
@@ -9,13 +10,14 @@ class Database {
      * @var PDO oject to generate a database conecction
      */
     private $connection;
-    
+
     /**
      * Function to construct a database object
      */
     public function __construct() {
         
     }
+
     /**
      * Fucntion to get connection from a database
      * 
@@ -24,6 +26,7 @@ class Database {
     public function getConnection() {
         return $this->connection;
     }
+
     /**
      * Function to set connection value passed as parameters for any database
      * 
@@ -33,6 +36,7 @@ class Database {
     public function setConnection($connection): void {
         $this->connection = $connection;
     }
+
     /**
      * Funtion to set a PDO object as connection for any database by using the same string connection
      */
@@ -41,9 +45,11 @@ class Database {
             $this->connection = new PDO('mysql:dbname=videoclub;host=127.0.0.1', 'root', '');
             // Catch to control any conecction error
         } catch (PDOException $e) {
-            displayError('La aplicaciónn esta en labores de matenimiento');
+            header('Location: /VideoClub_app/index.php?id=001');
+            exit;
         }
     }
+
     /**
      * Funtion to set null value to connection database parameter
      */
@@ -85,6 +91,7 @@ class Database {
         $sql .= ');';
         return $sql;
     }
+
     /**
      * Funtion to create a select query builded by taking values given as parameter
      * 
@@ -114,6 +121,7 @@ class Database {
 
         return $sql;
     }
+
     /**
      * Function to make a statement on database by taking different values given as parameter
      * 
@@ -136,10 +144,11 @@ class Database {
                 return false;
             }
         } catch (Exception $ex) {
-            displayError('La página esta en mantenimiento, disculpen las molestias');
-            return false;
+            header('Location: /VideoClub_app/index.php?id=001');
+            exit;
         }
     }
+
     /**
      * Funtion to create a update query builded by taking values given as parameter
      * 
@@ -175,6 +184,7 @@ class Database {
         $sql .= ';';
         return $sql;
     }
+
     /**
      * Funtion to create a delete query builded by taking values given as parameter
      * 
@@ -191,6 +201,7 @@ class Database {
         $sql .= ";";
         return $sql;
     }
+
     /**
      * Function to join tow string as query and subquery to create a sql sintax subquery
      * 

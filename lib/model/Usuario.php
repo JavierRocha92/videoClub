@@ -127,26 +127,13 @@ class Usuario{
                     <h2 class="card__title fs-3">
                         <?php echo $this->username ?>
                     </h2>
-                    <!-- film raitng 'container star' -->
-                    <div class="card__rating d-flex col-10 mb-4">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
                     <div class="card__sinopsis col-12 mb-2">
                         <!-- film description -->
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi similique commodi placeat, at
                         amet velit, adipisci libero repudiandae vel vitae nulla tempore veritatis nihil maiores tempora
                         aliquid quia aperiam neque.
                     </div>
-                    <!-- card button trailer -->
-                    <div class="card__button ms-2 mb-0 position-relative col-7 d-flex row">
-                        <a href="#" class="card__link text-decoration-none p-1 pe-2 fw-bold">
-                            Watch Trailer</a>
-                        <i class="fa-solid fs-4 fa-play card__icon position-absolute"></i>
-                    </div>
+                    
                 </main><!-- final card main -->
             </article><!-- final card content -->
             <?php

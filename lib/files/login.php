@@ -7,7 +7,7 @@ require '../model/File.php';
 
 //Object instances
 //Create file object to save info about user actions
-$file = new CustomFile('../lib/logs/logFile.csv', 'Username;Action;Date;Rol;Element;Element Id');
+$file = new CustomFile($_SERVER['DOCUMENT_ROOT'].'/VideoClub_app/lib/logs/logFile.csv', 'Username;Action;Date;Rol;Element;Element Id');
 //Create database object
 $bd = new Database();
 
