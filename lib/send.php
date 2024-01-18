@@ -30,7 +30,7 @@ if (isset($_POST['username']) && isset($_POST['subject']) && isset($_POST['conte
     //Tell something
     $email->SMTPAuth = true;
     //Origin mail email
-    $email->Username = 'j1992prueba1992@gmail.com';
+    $email->Username = '';
     //Password applicacion
     $email->Password = 'divhxvdleamcmplm';
     //Get secure protocol
@@ -38,9 +38,9 @@ if (isset($_POST['username']) && isset($_POST['subject']) && isset($_POST['conte
     //Inidicate smtp standard port
     $email->Port = 465;
     //Origin mail email
-    $email->setFrom('j1992prueba1992@gmail.com');
+    $email->setFrom('');
     //Destiny email send
-    $email->addAddress('j1992prueba1992@gmail.com');
+    $email->addAddress('');
     //Content type
     $email->isHTML(true);
     //set email subject
